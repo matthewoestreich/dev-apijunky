@@ -4,6 +4,7 @@
   "description": "heroku test node.js app",
   "main": "index.js",
   "scripts": {
+    "start": "npm run start:ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
     "start:ts": "npm run tsc && node ./build",
