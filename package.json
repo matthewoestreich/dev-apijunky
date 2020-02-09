@@ -4,10 +4,10 @@
   "description": "heroku test node.js app",
   "main": "index.js",
   "scripts": {
-    "start": "npm run start:ts",
+    "start": "npm run start:tsc",
     "tsc": "tsc",
-    "start:ts": "npm run tsc && node ./dist",
-    "init:ts": "npm run tsc -- --init",
+    "start:tsc": "npm run tsc && node ./dist",
+    "init:tsc": "npm run tsc -- --init",
     "pre-commit": "lint-staged",
     "jasmine:init": "node node_modules/jasmine/bin/jasmine init",
     "test": "npm run tsc && jasmine",
@@ -26,6 +26,7 @@
   "dependencies": {
     "@types/express": "^4.17.2",
     "express": "^4.17.1",
+    "module-alias": "^2.2.2",
     "typescript": "^3.7.5"
   },
   "devDependencies": {
