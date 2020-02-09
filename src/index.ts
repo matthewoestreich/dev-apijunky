@@ -15,7 +15,5 @@ const initializeExpress = (): Server => {
 
 const server: Server = initializeExpress();
 
-let s: string;
-
 // eslint-disable-next-line import/prefer-default-export
 export { server };

@@ -1,4 +1,4 @@
 language: node_js
 node_js:
-    - NODE_TEST
+    - "node"
 after_success: 'npm run coveralls'
