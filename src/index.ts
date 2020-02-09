@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import express, { Application, Request, Response } from 'express';
 import { Server } from 'http';
 
@@ -10,6 +11,7 @@ const initializeExpress = (callback?: Function): Server => {
     });
 
     const server = app.listen(port, (): void => {
+        /* istanbul ignore next */
         if (callback) {
             callback();
         }
@@ -18,6 +20,7 @@ const initializeExpress = (callback?: Function): Server => {
     return server;
 };
 
+/* istanbul ignore if */
 if (require.main === module) {
     initializeExpress();
 }

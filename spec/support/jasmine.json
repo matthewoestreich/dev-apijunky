@@ -3,6 +3,5 @@
     "spec_files": ["**/*[sS]pec.js"],
     "helpers": ["helpers/**/*.js"],
     "stopSpecOnExpectationFailure": true,
-    "random": false,
-    "reporter": "jasmine-ts-console-reporter"
+    "random": false
 }

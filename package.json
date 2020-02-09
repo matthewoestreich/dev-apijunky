@@ -10,7 +10,7 @@
     "init:tsc": "npm run tsc -- --init",
     "pre-commit": "lint-staged",
     "jasmine:init": "node node_modules/jasmine/bin/jasmine init",
-    "test": "npm run tsc && jasmine",
+    "test": "npm run tsc && nyc jasmine",
     "jasmine": "jasmine"
   },
   "repository": {
@@ -42,13 +42,15 @@
     "jasmine-console-reporter": "^3.1.0",
     "jasmine-ts-console-reporter": "^3.1.1",
     "lint-staged": "^10.0.7",
+    "nyc": "^15.0.0",
     "prettier": "^1.19.1",
     "request": "^2.88.0",
     "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0"
   },
   "_moduleDirectories": [
-    "src"
+    "src",
+    "dist"
   ],
   "lint-staged": {
     "*.ts": [
