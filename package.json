@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run start:ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "start:ts": "npm run tsc && node ./build",
+    "start:ts": "npm run tsc && node ./dist",
     "init:ts": "npm run tsc -- --init",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "jasmine:init": "node node_modules/jasmine/bin/jasmine init",
+    "test": "npm run tsc && jasmine",
+    "jasmine": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
     "typescript": "^3.7.5"
   },
   "devDependencies": {
+    "@types/jasmine": "^3.5.3",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
     "eslint": "^6.8.0",
@@ -34,8 +37,12 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "jasmine": "^3.5.0",
+    "jasmine-console-reporter": "^3.1.0",
+    "jasmine-ts-console-reporter": "^3.1.1",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
+    "request": "^2.88.0",
     "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0"
   },
