@@ -6,7 +6,8 @@
     "scripts": {
         "tsnode:start": "ts-node ./src",
         "start": "npm run tsc && node ./dist",
-        "tsc": "rimraf ./dist && tsc",
+        "tsc": "tsc",
+        "clean": "rimraf ./dist",
         "tsc:init": "npm run tsc -- --init",
         "test": "nyc mocha",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
