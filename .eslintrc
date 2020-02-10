@@ -8,7 +8,8 @@
     "plugins": ["@typescript-eslint"],
     "env": {
         "node": true,
-        "mocha": true
+        "mocha": true,
+        "express": true
     },
     "extends": [
         "airbnb-base",
@@ -28,7 +29,7 @@
         "@typescript-eslint/no-use-before-define": 1,
         "@typescript-eslint/no-explicit-any": 2,
         "@typescript-eslint/no-inferrable-types": 1,
-        "import/prefer-default-export": 1,
+        "import/prefer-default-export": 0,
         "import/no-cycle": 2,
         "import/extensions": [
             "error",
