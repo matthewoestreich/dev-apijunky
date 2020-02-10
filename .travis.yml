@@ -1,4 +1,9 @@
 language: node_js
 node_js:
-    - "node"
-after_success: 'npm run coveralls'
+- node
+after_success: npm run coveralls
+deploy:
+  provider: heroku
+  app: tin-fire
+  api_key:
+    secure: dyjHBy5AEIb+TnuhwkMGRo/NN75+mHjheG8dR5poNetCDNNEvQN2YXFAkCVTQTG/Bn11XHC/jiEns6ifdTyzxxy8O3AYQYJVrMar/Y77KU3ZYpiJxjiCesttlRUYcW7baRRB1AfIZn0tSrp3CFE4yzKAtOa1DtJ63t7/GEikAd0Wk0LLJ5URtCExcLes5OkCIj1Pihn3Z3tHfJ0Nuc2ebDGYUKlWOjBADsYkv9c319H8aC1o2jWQ72lyPgS7PsBrKwIoMWqyaBXM4VEEqCosF8mDI+tcIcBf/ZeFz4BjQKttAILiyd5Qm4q6SLAUsKRLo9u7TcdPhclMqdTX1Sj3HUCvO9pIFay9dvpzW43+5ELZklVRvyjGZmPivu2G+8EDzi30O2BO0ckmeG7erGoSxWvI/5LjW7VvYJ5WebpjeycPlhdxXaeToUcPO4edGLG3sQm03904YuBmo0jpsVsbkEyglnXafdiYtroDtlKG7OuAQgQe9IOajIYtYIgk47ufLx8ChigRClyn0WsmNueh7r29VnCr71XaTv9N9+5ydQ37obldwARovC0fKwjEYLXuMjdz14szzUazSbJnBklXJdm/sC8pdS6/1CPslkzs+gvXVFQYJNAzvythbVHSSePrXQ0T31FIzUI8fU/RTpUNOjsSbNRxiS9JD/XvFATVnsc=
