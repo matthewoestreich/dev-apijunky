@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "tsnode:start": "ts-node ./src",
-        "start": "npm run test && npm run tsc && node ./dist",
+        "start": "npm run tsc && node ./dist",
         "tsc": "tsc",
         "clean": "rimraf ./dist",
         "tsc:init": "npm run tsc -- --init",
