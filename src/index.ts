@@ -13,10 +13,10 @@ import { routeNotFound, handleError } from 'middleware';
 import { attachPublicRoutes } from 'routes';
 
 const establishDatabaseConnection = async (): Promise<void> => {
+    // eslint-disable-next-line no-useless-catch
     try {
         await createDatabaseConnection();
     } catch (error) {
-        console.log(error);
         throw error;
     }
 };
@@ -35,9 +35,16 @@ const initializeExpress = (): Server => {
     app.use(handleError);
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    return app.listen(process.env.PORT || 3000, async () => {
-        await establishDatabaseConnection();
+    const server = app.listen(process.env.PORT || 3000, async () => {
+        try {
+            await establishDatabaseConnection();
+        } catch (err) {
+            console.log(err);
+            server.close();
+        }
     });
+
+    return server;
 };
 
 const server: Server = initializeExpress();

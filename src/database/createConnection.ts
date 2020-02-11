@@ -13,7 +13,7 @@ const createDatabaseConnection = (): Promise<Connection> =>
         entities: Object.values(entities),
         synchronize: true,
         ssl: {
-            rejectUnauthorized: true,
+            rejectUnauthorized: false,
         },
     });
 
