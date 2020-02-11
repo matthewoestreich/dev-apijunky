@@ -1,7 +1,9 @@
 import 'mocha';
 import request from 'supertest';
 import { expect } from 'chai';
+
 import { server } from '../src';
+import is from '../src/utils/validation';
 
 after(done => server.close(done));
 
@@ -29,4 +31,12 @@ describe('GET /RouteThatDoesNotExist', () => {
             .get(path)
             .expect(404, done);
     })
-})
+});
+
+describe('Utils - Testing Validations', () => {
+    it('is a valid email address [need to revisit this]', done => {
+        const testEmail = is.email();
+        expect(testEmail('test')).to.equal('Must be a valid email');
+        done();
+    })
+});
