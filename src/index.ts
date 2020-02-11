@@ -38,13 +38,13 @@ const initializeExpress = (): Server => {
 };
 
 // eslint-disable-next-line import/no-mutable-exports
-let SERVER: Server;
+let server: Server;
 
 const initializeApp = async (): Promise<void> => {
     await establishDatabaseConnection();
-    SERVER = initializeExpress();
+    server = initializeExpress();
 };
 
 initializeApp();
 
-export { SERVER };
+export { server };
