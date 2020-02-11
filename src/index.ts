@@ -34,17 +34,12 @@ const initializeExpress = (): Server => {
     app.use(routeNotFound);
     app.use(handleError);
 
-    return app.listen(process.env.PORT || 3000);
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    return app.listen(process.env.PORT || 3000, async () => {
+        await establishDatabaseConnection();
+    });
 };
 
-// eslint-disable-next-line import/no-mutable-exports
-let server: Server;
-
-const initializeApp = async (): Promise<void> => {
-    await establishDatabaseConnection();
-    server = initializeExpress();
-};
-
-initializeApp();
+const server: Server = initializeExpress();
 
 export { server };
