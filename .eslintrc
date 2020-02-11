@@ -8,8 +8,7 @@
     "plugins": ["@typescript-eslint"],
     "env": {
         "node": true,
-        "mocha": true,
-        "express": true
+        "mocha": true
     },
     "extends": [
         "airbnb-base",
