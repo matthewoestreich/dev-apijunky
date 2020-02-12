@@ -5,6 +5,8 @@ import { expect } from 'chai';
 import { server } from '../src';
 import is from '../src/utils/validation';
 
+import { ExpectStatus } from './helpers';
+
 after(done => server.close(done));
 
 describe('Volkswagen Test', () => {
@@ -15,23 +17,11 @@ describe('Volkswagen Test', () => {
     });
 });
 
-describe('GET /', () => {
-    const path = '/';
-    it('responds with status of 200', done => {
-        request(server)
-            .get(path)
-            .expect(200, done);
-    });
-});
+ExpectStatus(200, '/', 'GET /', server);
 
-describe('GET /RouteThatDoesNotExist', () => {
-    const path = '/RouteThatDoesNotExist';
-    it('responds with status of 404', done => {
-        request(server)
-            .get(path)
-            .expect(404, done);
-    })
-});
+ExpectStatus(404, '/RouteThatDoesNotExist', 'GET /RouteThatDoesNotExist', server);
+
+ExpectStatus(200, '/api/v1/test', 'GET /api/v1/test', server);
 
 describe('Utils - Testing Validations', () => {
     it('is a valid email address [need to revisit this]', done => {

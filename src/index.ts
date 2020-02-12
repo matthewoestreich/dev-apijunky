@@ -10,7 +10,7 @@ import helmet from 'helmet';
 import createDatabaseConnection from 'database/createConnection';
 import { routeNotFound, handleError } from 'middleware';
 
-import { attachPublicRoutes } from 'routes';
+import { attachPublicRoutes, attachProtectedRoutes } from 'routes';
 
 const initializeExpress = (): Server => {
     const app: Application = express();
@@ -21,6 +21,7 @@ const initializeExpress = (): Server => {
     app.use(express.urlencoded({ extended: false }));
 
     attachPublicRoutes(app);
+    attachProtectedRoutes(app);
 
     app.use(routeNotFound);
     app.use(handleError);
@@ -29,7 +30,7 @@ const initializeExpress = (): Server => {
     const server = app.listen(process.env.PORT || 3000, async () => {
         try {
             await createDatabaseConnection();
-        } catch (err) {
+        } catch (err) /* istanbul ignore next */ {
             console.log(err);
             server.close();
         }
