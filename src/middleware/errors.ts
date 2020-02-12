@@ -6,10 +6,10 @@ export const handleError: ErrorRequestHandler = (
     error,
     _req: Request,
     res: Response,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _next: NextFunction,
 ): void => {
     const isErrorSafeForClient = error instanceof CustomError;
+
     /* istanbul ignore next */
     const clientError = isErrorSafeForClient
         ? { ...error }
@@ -21,5 +21,6 @@ export const handleError: ErrorRequestHandler = (
           };
 
     console.log(clientError);
+
     res.status(clientError.status).send({ error: clientError });
 };
