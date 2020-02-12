@@ -8,7 +8,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import createDatabaseConnection from 'database/createConnection';
-import { routeNotFound, handleError } from 'middleware';
+import { routeNotFound, handleError, addRespondToResponse } from 'middleware';
 
 import { attachPublicRoutes, attachProtectedRoutes } from 'routes';
 
@@ -19,6 +19,7 @@ const initializeExpress = (): Server => {
     app.use(helmet());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
+    app.use(addRespondToResponse);
 
     attachPublicRoutes(app);
     attachProtectedRoutes(app);

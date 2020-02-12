@@ -8,6 +8,8 @@ const attachApiV1Routes = (app: Application): void => {
     const apiV1Router = express.Router();
 
     apiV1Router.get('/test', apiV1.test);
+    apiV1Router.get('/createtestuser', apiV1.createTestUser);
+    apiV1Router.get('/user', apiV1.createNewUser); // ?un=username&pw=password
 
     app.use(apiV1RootPath, apiV1Router);
 };

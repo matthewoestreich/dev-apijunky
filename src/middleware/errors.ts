@@ -1,9 +1,11 @@
+/* eslint-disable spaced-comment */
 import { ErrorRequestHandler, Request, Response, NextFunction } from 'express';
 
 import { CustomError } from 'errors';
 
 export const handleError: ErrorRequestHandler = (
-    error,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: CustomError | any,
     _req: Request,
     res: Response,
     _next: NextFunction,
@@ -17,7 +19,7 @@ export const handleError: ErrorRequestHandler = (
               message: 'Something went wrong, please contact our support.',
               code: 'INTERNAL_ERROR',
               status: 500,
-              data: {},
+              data: error.data ? error.data : {},
           };
 
     console.log(clientError);

@@ -14,10 +14,34 @@ export class CustomError extends Error {
     ) {
         super();
     }
+
+    static toss = (message: string, data: ErrorData): void => {
+        const ce = new CustomError(message);
+        ce.data = data;
+        throw ce;
+    };
 }
 
 export class RouteNotFoundError extends CustomError {
     constructor(originalUrl: string) {
         super(`Route '${originalUrl}' does not exist.`, 'ROUTE_NOT_FOUND', 404);
+    }
+}
+
+export class EntityNotFoundError extends CustomError {
+    constructor(entityName: string) {
+        super(`${entityName} not found.`, 'ENTITY_NOT_FOUND', 404);
+    }
+}
+
+export class BadUserInputError extends CustomError {
+    constructor(errorData: ErrorData) {
+        super('There were validation errors.', 'BAD_USER_INPUT', 400, errorData);
+    }
+}
+
+export class InvalidTokenError extends CustomError {
+    constructor(message = 'Authentication token is invalid.') {
+        super(message, 'INVALID_TOKEN', 401);
     }
 }
