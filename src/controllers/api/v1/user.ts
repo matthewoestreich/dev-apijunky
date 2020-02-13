@@ -61,12 +61,12 @@ export const validateUserPassword = catchErrors(async (req: Request, res: Respon
         if (argsCount === 2 && req.query.un && req.query.pw) {
             const foundUser = await User.findOne({ username: req.query.un });
             if (!foundUser) {
-                throw Error('Unable to find user!');
+                res.respond(200, { status: false });
             } else {
                 res.respond(200, { status: foundUser.validatePassword(req.query.pw) });
             }
         } else {
-            CustomError.toss('Incorrect parameter set!', {});
+            res.respond(200, '');
         }
     } catch (error) {
         CustomError.toss('Unable to find user!', {});
