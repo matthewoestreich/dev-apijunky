@@ -4,7 +4,8 @@
     "description": "heroku test node.js app",
     "main": "index.js",
     "scripts": {
-        "tsnode:start": "npm run clean:build && ts-node ./src",
+        "dev": "nodemon",
+        "dev:src": "npm run clean:build && node --inspect ./dist",
         "start": "npm run build && node ./dist",
         "build": "tsc",
         "clean": "rimraf ./dist",
@@ -56,6 +57,7 @@
         "eslint-plugin-prettier": "^3.1.2",
         "lint-staged": "^10.0.7",
         "mocha": "^7.0.1",
+        "nodemon": "^2.0.2",
         "nyc": "^15.0.0",
         "prettier": "^1.19.1",
         "request": "^2.88.0",

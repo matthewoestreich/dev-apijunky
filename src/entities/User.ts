@@ -10,15 +10,8 @@ import {
 
 import bcrypt from 'bcrypt';
 
-import is from 'utils/validation';
-
 @Entity()
 class User extends BaseEntity {
-    static validations = {
-        name: [is.required(), is.maxLength(100)],
-        email: [is.required(), is.email(), is.maxLength(200)],
-    };
-
     validatePassword = (suppliedPassword: string): boolean => {
         return bcrypt.compareSync(suppliedPassword, this.password);
     };
@@ -26,17 +19,11 @@ class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column('varchar')
+    @Column('varchar', { unique: true })
     username: string;
 
     @Column('varchar')
     password: string;
-
-    @Column('varchar', { unique: true })
-    email: string;
-
-    @Column('varchar', { length: 2000, nullable: true })
-    avatarUrl: string;
 
     @CreateDateColumn({ type: 'timestamp', nullable: true })
     createdAt: Date;

@@ -2,16 +2,11 @@ import { Request, Response } from 'express';
 import { catchErrors, CustomError } from 'errors';
 import { User } from 'entities';
 
-export const test = catchErrors((_req: Request, res: Response) => {
-    res.respond(200, 'Test');
-});
-
 export const createTestUser = catchErrors(async (_req: Request, res: Response) => {
     try {
         const newUser = new User();
         newUser.username = 'Test One';
         newUser.password = 'abc123';
-        newUser.email = 'test.one@gmail.com';
         await newUser.save();
         res.respond(200, { status: 'ok' });
     } catch (error) {
@@ -22,10 +17,18 @@ export const createTestUser = catchErrors(async (_req: Request, res: Response) =
     }
 });
 
-export const createNewUser = catchErrors((req: Request, res: Response) => {
+export const createNewUser = catchErrors(async (req: Request, res: Response) => {
     try {
-        const len = req.query.length;
-        res.respond(200, { queryLen: len });
+        const argsCount = Object.keys(req.query).length;
+        if (argsCount === 2 && req.query.un && req.query.pw) {
+            const nu = new User();
+            nu.username = req.query.un;
+            nu.password = req.query.pw;
+            await nu.save();
+            res.respond(200, { success: true });
+        } else {
+            CustomError.toss('Incorrect parameter set!', {});
+        }
     } catch (error) {
         CustomError.toss('Unable to create user!', {
             debug: error.message,

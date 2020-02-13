@@ -9,7 +9,7 @@ const attachApiV1Routes = (app: Application): void => {
 
     apiV1Router.get('/test', apiV1.test);
     apiV1Router.get('/createtestuser', apiV1.createTestUser);
-    apiV1Router.get('/user', apiV1.createNewUser); // ?un=username&pw=password
+    apiV1Router.get('/user/create', apiV1.createNewUser); // ?un=username&pw=password
 
     app.use(apiV1RootPath, apiV1Router);
 };
