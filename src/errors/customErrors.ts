@@ -34,6 +34,13 @@ export class EntityNotFoundError extends CustomError {
     }
 }
 
+export class CreateEntityError extends CustomError {
+    constructor(entityName: string, data: ErrorData = {}) {
+        super(`Unable to create entity ${entityName}`);
+        this.data = data;
+    }
+}
+
 export class BadUserInputError extends CustomError {
     constructor(errorData: ErrorData) {
         super('There were validation errors.', 'BAD_USER_INPUT', 400, errorData);

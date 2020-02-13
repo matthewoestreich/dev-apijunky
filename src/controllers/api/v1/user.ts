@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
-import { catchErrors, CustomError } from 'errors';
+import { catchErrors, CustomError, CreateEntityError } from 'errors';
 import { User } from 'entities';
+
+import { createEntity, findEntityOrThrow } from 'utils/typeorm';
 
 export const createTestUser = catchErrors(async (_req: Request, res: Response) => {
     try {
@@ -17,6 +19,7 @@ export const createTestUser = catchErrors(async (_req: Request, res: Response) =
     }
 });
 
+/*
 export const createNewUser = catchErrors(async (req: Request, res: Response) => {
     try {
         const argsCount = Object.keys(req.query).length;
@@ -36,7 +39,33 @@ export const createNewUser = catchErrors(async (req: Request, res: Response) => 
         });
     }
 });
+*/
 
+export const createNewUser = catchErrors(async (req: Request, res: Response) => {
+    try {
+        const nu = await createEntity(User, {
+            username: req.query.un,
+            password: req.query.pw,
+        });
+        res.respond(200, { ...nu });
+    } catch (error) {
+        throw new CreateEntityError('User', { ...error });
+    }
+    /*
+    const argsCount = Object.keys(req.query).length;
+    if (argsCount === 2 && req.query.un && req.query.pw) {
+        const nu = new User();
+        nu.username = req.query.un;
+        nu.password = req.query.pw;
+        await nu.save();
+        res.respond(200, { success: true });
+    } else {
+        res.respond(200, { success: false });
+    }
+    */
+});
+
+/*
 export const findUser = catchErrors(async (req: Request, res: Response) => {
     try {
         const argsCount = Object.keys(req.query).length;
@@ -53,6 +82,12 @@ export const findUser = catchErrors(async (req: Request, res: Response) => {
     } catch (error) {
         CustomError.toss('Unable to find user!', {});
     }
+});
+*/
+
+export const findUser = catchErrors(async (req: Request, res: Response) => {
+    const f = await findEntityOrThrow(User, { where: { username: req.query.un } });
+    res.respond(200, { ...f });
 });
 
 export const validateUserPassword = catchErrors(async (req: Request, res: Response) => {
