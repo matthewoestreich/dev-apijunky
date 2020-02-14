@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
-import { catchErrors, CustomError } from 'errors';
+import ms from 'ms';
 
+import { catchErrors } from 'errors';
 import { User, JWT } from 'entities';
 import { createEntity, findEntityOrThrow } from 'utils/typeorm';
 import { signAndEncryptToken } from 'utils/token';
+import { addMillisecondsToDate } from 'utils/general';
 
 export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Response) => {
     try {
@@ -11,13 +13,15 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
         const pwValidated = foundUser.validateHash(req.body.pw);
 
         if (!pwValidated) {
-            res.respond(403, '');
-        } else {
-            const token = signAndEncryptToken({ id: foundUser.id });
-            const savedToken = await createEntity(JWT, { token });
-            res.respond(200, { token: savedToken.token });
+            throw Error();
         }
+
+        const token = signAndEncryptToken({ id: foundUser.id });
+        const validFor = ms(process.env.JWT_EXPIRES_IN);
+        const expires = addMillisecondsToDate(new Date(Date.now()), validFor);
+        const savedToken = await createEntity(JWT, { token, expires });
+        return res.respond(200, { token: savedToken.token });
     } catch (error) {
-        CustomError.toss('Unable to find user!', {});
+        return res.respond(401, {});
     }
 });

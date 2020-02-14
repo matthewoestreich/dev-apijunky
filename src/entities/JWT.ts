@@ -7,6 +7,9 @@ class JWT extends BaseEntity {
 
     @Column('varchar', { unique: true })
     token: string;
+
+    @Column({ type: 'timestamp' })
+    expires: Date;
 }
 
 export default JWT;

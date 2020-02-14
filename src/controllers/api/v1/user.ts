@@ -31,21 +31,3 @@ export const findUser = catchErrors(async (req: Request, res: Response) => {
     const fu = await findEntityOrThrow(User, { where: { username: req.query.un } });
     res.respond(200, fu.toResponseObject());
 });
-
-export const validateUserPassword = catchErrors(async (req: Request, res: Response) => {
-    try {
-        const argsCount = Object.keys(req.query).length;
-        if (argsCount === 2 && req.query.un && req.query.pw) {
-            const foundUser = await User.findOne({ username: req.query.un });
-            if (!foundUser) {
-                res.respond(200, { status: false });
-            } else {
-                res.respond(200, { status: foundUser.validateHash(req.query.pw) });
-            }
-        } else {
-            res.respond(200, '');
-        }
-    } catch (error) {
-        CustomError.toss('Unable to find user!', {});
-    }
-});
