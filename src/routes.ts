@@ -18,7 +18,7 @@ const attachApiV1PublicRoutes = (app: Application): void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const attachApiV1UserRoutes = (app: Application, middleware?: RequestHandler[]): void => {
+const attachApiV1UserRoutes = (app: Application, middleware: RequestHandler[] = []): void => {
     /**
      * @routes /api/v1/user/
      */
@@ -31,8 +31,7 @@ const attachApiV1UserRoutes = (app: Application, middleware?: RequestHandler[]):
     apiV1UserRouter.get('/find', apiV1.findUser); // ?un=username
     apiV1UserRouter.get('/validate', apiV1.validateUserPassword); // ?un=username&pw=password
 
-    const routerMiddleware = middleware || [];
-    app.use(API_PATHS.v1.user, routerMiddleware, apiV1UserRouter);
+    app.use(API_PATHS.v1.user, middleware, apiV1UserRouter);
 };
 
 export const attachPublicRoutes = (app: Application): void => {
@@ -41,6 +40,9 @@ export const attachPublicRoutes = (app: Application): void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const attachProtectedRoutes = (app: Application, middleware?: RequestHandler[]): void => {
+export const attachProtectedRoutes = (
+    app: Application,
+    middleware: RequestHandler[] = [],
+): void => {
     attachApiV1UserRoutes(app, middleware);
 };
