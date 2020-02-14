@@ -21,12 +21,4 @@ ExpectStatus(200, '/', 'GET /', server);
 
 ExpectStatus(404, '/RouteThatDoesNotExist', 'GET /RouteThatDoesNotExist', server);
 
-ExpectStatus(200, '/api/v1/test', 'GET /api/v1/test', server);
-
-describe('Utils - Testing Validations', () => {
-    it('is a valid email address [need to revisit this]', done => {
-        const testEmail = is.email();
-        expect(testEmail('test')).to.equal('Must be a valid email');
-        done();
-    })
-});
+ExpectStatus(401, '/api/v1/user/test', 'GET /api/v1/user/test **NEED TO REVISIT THIS**', server);
