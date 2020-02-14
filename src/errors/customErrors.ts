@@ -3,6 +3,13 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ErrorData = { [key: string]: any };
 
+export interface CustomErrorParams {
+    message: string;
+    status: number;
+    data: object;
+    code: string | number;
+}
+
 export class CustomError extends Error {
     constructor(
         public message: string,

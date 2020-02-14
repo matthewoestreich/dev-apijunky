@@ -1,5 +1,6 @@
 export {
     CustomError,
+    CustomErrorParams,
     RouteNotFoundError,
     EntityNotFoundError,
     BadUserInputError,

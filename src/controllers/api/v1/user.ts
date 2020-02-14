@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { catchErrors, CustomError, CreateEntityError } from 'errors';
+import { catchErrors, CustomError } from 'errors';
 import { User } from 'entities';
 
 import { createEntity, findEntityOrThrow } from 'utils/typeorm';
-import { omit } from 'utils/generic';
+import { omit } from 'utils/general';
 
 export const createTestUser = catchErrors(async (_req: Request, res: Response) => {
     try {
@@ -21,20 +21,17 @@ export const createTestUser = catchErrors(async (_req: Request, res: Response) =
 });
 
 export const createNewUser = catchErrors(async (req: Request, res: Response) => {
-    try {
-        const nu = await createEntity(User, {
-            username: req.query.un,
-            password: req.query.pw,
-        });
-        res.respond(200, { ...nu });
-    } catch (error) {
-        throw new CreateEntityError('User', { ...error });
-    }
+    const nu = await createEntity(User, {
+        username: req.query.un,
+        password: req.query.pw,
+    });
+    res.respond(200, { ...nu });
 });
 
 export const findUser = catchErrors(async (req: Request, res: Response) => {
     const fu = await findEntityOrThrow(User, { where: { username: req.query.un } });
-    res.respond(200, omit('password', fu));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    res.respond(200, omit(fu, ['password']));
 });
 
 export const validateUserPassword = catchErrors(async (req: Request, res: Response) => {

@@ -1,3 +1,3 @@
 export { routeNotFound } from 'middleware/routeNotFound';
-export { handleError } from 'middleware/errors';
+export { handleError } from 'middleware/errorHandlers';
 export { addRespondToResponse } from 'middleware/responses';
