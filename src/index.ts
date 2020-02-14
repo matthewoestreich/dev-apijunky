@@ -8,7 +8,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import createDatabaseConnection from 'database/createConnection';
-import { routeNotFound, handleError, addRespondToResponse } from 'middleware';
+import { routeNotFound, handleError, addRespondToResponse, authenticateUser } from 'middleware';
 
 import { attachPublicRoutes, attachProtectedRoutes } from 'routes';
 
@@ -22,7 +22,7 @@ const initializeExpress = (): Server => {
     app.use(addRespondToResponse);
 
     attachPublicRoutes(app);
-    attachProtectedRoutes(app);
+    attachProtectedRoutes(app, [authenticateUser]);
 
     app.use(routeNotFound);
     app.use(handleError);

@@ -3,7 +3,6 @@ import { catchErrors, CustomError } from 'errors';
 import { User } from 'entities';
 
 import { createEntity, findEntityOrThrow } from 'utils/typeorm';
-import { omit } from 'utils/general';
 
 export const createTestUser = catchErrors(async (_req: Request, res: Response) => {
     try {
@@ -25,12 +24,12 @@ export const createNewUser = catchErrors(async (req: Request, res: Response) => 
         username: req.query.un,
         password: req.query.pw,
     });
-    res.respond(200, { ...nu });
+    res.respond(200, nu.toResponseObject());
 });
 
 export const findUser = catchErrors(async (req: Request, res: Response) => {
     const fu = await findEntityOrThrow(User, { where: { username: req.query.un } });
-    res.respond(200, omit(['password'], fu));
+    res.respond(200, fu.toResponseObject());
 });
 
 export const validateUserPassword = catchErrors(async (req: Request, res: Response) => {
@@ -41,7 +40,7 @@ export const validateUserPassword = catchErrors(async (req: Request, res: Respon
             if (!foundUser) {
                 res.respond(200, { status: false });
             } else {
-                res.respond(200, { status: foundUser.validatePassword(req.query.pw) });
+                res.respond(200, { status: foundUser.validateHash(req.query.pw) });
             }
         } else {
             res.respond(200, '');

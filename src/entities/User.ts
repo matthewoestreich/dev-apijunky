@@ -12,7 +12,7 @@ import bcrypt from 'bcrypt';
 
 @Entity()
 class User extends BaseEntity {
-    validatePassword = (suppliedPassword: string): boolean => {
+    validateHash = (suppliedPassword: string): boolean => {
         return bcrypt.compareSync(suppliedPassword, this.password);
     };
 
@@ -35,6 +35,15 @@ class User extends BaseEntity {
     hashPassword = (): void => {
         const salt = bcrypt.genSaltSync(11);
         this.password = bcrypt.hashSync(this.password, salt);
+    };
+
+    toResponseObject = (): object => {
+        return {
+            id: this.id,
+            username: this.username,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
+        };
     };
 }
 
