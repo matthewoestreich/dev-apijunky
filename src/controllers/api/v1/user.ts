@@ -30,8 +30,7 @@ export const createNewUser = catchErrors(async (req: Request, res: Response) => 
 
 export const findUser = catchErrors(async (req: Request, res: Response) => {
     const fu = await findEntityOrThrow(User, { where: { username: req.query.un } });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    res.respond(200, omit(fu, ['password']));
+    res.respond(200, omit(['password'], fu));
 });
 
 export const validateUserPassword = catchErrors(async (req: Request, res: Response) => {
