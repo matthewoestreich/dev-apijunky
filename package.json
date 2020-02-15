@@ -6,14 +6,14 @@
     "scripts": {
         "dev": "nodemon",
         "dev:src": "npm run clean:build && npm run apidoc && node --inspect ./dist",
-        "start": "npm run build && node ./dist",
+        "start": "npm run build && npm run apidoc && node ./dist",
         "build": "tsc",
         "clean": "rimraf ./dist",
         "clean:build": "npm run clean && npm run build",
         "tsc:init": "npm run build -- --init",
         "test": "nyc mocha",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-        "apidoc": "apidoc --config ./apidocs/ --input apidocs/ --output public/docs"
+        "apidoc": "apidoc --config ./apidocs/ --input apidocs/ --output dist/public/docs"
     },
     "repository": {
         "type": "git",
@@ -32,6 +32,7 @@
         "@types/helmet": "0.0.45",
         "@types/jsonwebtoken": "^8.3.7",
         "@types/ms": "^0.7.31",
+        "apidoc": "^0.20.0",
         "bcrypt": "^3.0.8",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",

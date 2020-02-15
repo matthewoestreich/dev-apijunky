@@ -16,7 +16,7 @@ const initializeExpress = (): Server => {
     const app: Application = express();
 
     // This is for publishing the apidocs package documentation
-    app.use(express.static('public'));
+    app.use(express.static('dist/public'));
 
     app.use(cors());
     app.use(helmet());
