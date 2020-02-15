@@ -12,10 +12,10 @@ const attachApiV1PublicRoutes = (app: Application): void => {
     const apiV1PublicRouter = express.Router();
 
     /**
-     * @api {post} /api/v1/login Login to API
+     * @api {post} /api/v1/login Authentication
      * @apiVersion 0.0.1
-     * @apiName Login
-     * @apiGroup api
+     * @apiName Authentication
+     * @apiGroup Getting Started
      *
      * @apiParam {String} un User's username.
      * @apiParam {String} pw User's password.
