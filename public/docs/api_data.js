@@ -51,7 +51,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "src/routes.ts",
+    "filename": "apidocs/routes.ts",
     "groupTitle": "Getting_Started"
   },
   {
@@ -99,7 +99,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "src/routes.ts",
+    "filename": "apidocs/routes.ts",
     "groupTitle": "User"
   },
   {
@@ -167,7 +167,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "src/routes.ts",
+    "filename": "apidocs/routes.ts",
     "groupTitle": "User"
   },
   {
@@ -228,7 +228,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "src/routes.ts",
+    "filename": "apidocs/routes.ts",
     "groupTitle": "User"
   },
   {
@@ -276,7 +276,7 @@ define({ "api": [
         ]
       }
     },
-    "filename": "src/routes.ts",
+    "filename": "apidocs/routes.ts",
     "groupTitle": "User"
   }
 ] });

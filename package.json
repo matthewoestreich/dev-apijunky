@@ -13,7 +13,7 @@
         "tsc:init": "npm run build -- --init",
         "test": "nyc mocha",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-        "apidoc": "apidoc --input src/ --output public/docs"
+        "apidoc": "apidoc --config ./apidocs/ --input apidocs/ --output public/docs"
     },
     "repository": {
         "type": "git",
