@@ -21,7 +21,8 @@ import { attachPublicRoutes, attachProtectedRoutes } from 'routes';
 const initializeExpress = (): Server => {
     const app: Application = express();
 
-    app.use(logger);
+    // Log each request we get
+    app.use(logger());
 
     // This is for publishing the apidocs package documentation
     app.use(express.static('dist/public'));

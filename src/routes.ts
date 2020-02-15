@@ -33,7 +33,6 @@ const attachApiV1UserRoutes = (app: Application, middleware: RequestHandler[] = 
 
 export const attachPublicRoutes = (app: Application): void => {
     app.get('/', home.sayHelloWorld);
-    app.get('/create', apiV1.createNewUser);
     attachApiV1PublicRoutes(app);
 };
 
