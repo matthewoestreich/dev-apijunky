@@ -10,7 +10,9 @@ const attachApiV1PublicRoutes = (app: Application): void => {
      * @path /api/v1/
      */
     const apiV1PublicRouter = express.Router();
+
     apiV1PublicRouter.post('/login', apiV1.logUserInAndReturnToken);
+
     app.use(API_PATHS.v1.root, apiV1PublicRouter);
 };
 

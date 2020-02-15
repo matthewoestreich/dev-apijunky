@@ -22,6 +22,7 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
         const validFor = ms(Configuration.JWT_EXPIRES_IN);
         const expires = addMillisecondsToDate(new Date(Date.now()), validFor);
         const savedToken = await createEntity(JWT, { token, expires });
+
         return res.respond(200, { token: savedToken.token });
     } catch (error) {
         return res.respond(401, { ...error });
