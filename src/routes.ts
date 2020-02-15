@@ -35,11 +35,67 @@ const attachApiV1UserRoutes = (app: Application, middleware: RequestHandler[] = 
      */
     const apiV1UserRouter = express.Router();
 
-    // GET /api/v1/user/*
-    apiV1UserRouter.get('/test', apiV1.test);
-    apiV1UserRouter.get('/createtestuser', apiV1.createTestUser);
-    apiV1UserRouter.get('/create', apiV1.createNewUser); // ?un=username&pw=password
-    apiV1UserRouter.get('/find', apiV1.findUser); // ?un=username
+    // POST /api/v1/user/*
+    /**
+     * @api {post} /api/v1/user/test Test
+     * @apiVersion 0.0.1
+     * @apiName ApiV1User
+     * @apiGroup User
+     *
+     * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
+     *
+     * @apiSuccess {String} Test Returns `Test`.
+     *
+     * @apiError (401) Bad Request  Returns 401 status on bad authentication request.
+     */
+    apiV1UserRouter.post('/test', apiV1.test);
+
+    /**
+     * @api {post} /api/v1/user/createtestuser Create Test User
+     * @apiVersion 0.0.1
+     * @apiName ApiV1CreateTestUser
+     * @apiGroup User
+     *
+     * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
+     *
+     * @apiSuccess {Object} user Returns created user object (minus password) This is for testing purposes.
+     *
+     * @apiError (401) Bad Request  Returns 401 status on bad authentication request.
+     */
+    apiV1UserRouter.post('/createtestuser', apiV1.createTestUser);
+
+    /**
+     * @api {post} /api/v1/user/create Create User
+     * @apiVersion 0.0.1
+     * @apiName ApiV1CreateUser
+     * @apiGroup User
+     *
+     * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
+     *
+     * @apiParam {String} un Username of account you want to create.
+     * @apiParam {String} pw Password of account you want to create.
+     *
+     * @apiSuccess {Object} Returns created user object (minus password).
+     *
+     * @apiError (401) 401 Returns 401 status on bad authentication request.
+     */
+    apiV1UserRouter.post('/create', apiV1.createNewUser); // ?un=username&pw=password
+
+    /**
+     * @api {post} /api/v1/user/find Find User
+     * @apiVersion 0.0.1
+     * @apiName ApiV1FindUser
+     * @apiGroup User
+     *
+     * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
+     *
+     * @apiParam {String} un Username of the user you want to find.
+     *
+     * @apiSuccess {Object} Returns found user object.
+     *
+     * @apiError (401) 401 Returns 401 status on bad authentication request.
+     */
+    apiV1UserRouter.post('/find', apiV1.findUser); // ?un=username
 
     app.use(API_PATHS.v1.user, middleware, apiV1UserRouter);
 };
