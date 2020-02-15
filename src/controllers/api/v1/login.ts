@@ -15,7 +15,7 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
         const pwValidated = foundUser.validateHash(req.body.pw);
 
         if (!pwValidated) {
-            throw Error();
+            throw Error('!pwValidated');
         }
 
         const token = signAndEncryptToken({ id: foundUser.id });
