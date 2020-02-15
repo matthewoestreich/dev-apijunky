@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "nodemon",
         "dev:src": "npm run clean:build && node --inspect ./dist",
-        "start": "npm run build && npm run apidoc && node ./dist",
+        "start": "npm i -g apidoc && npm run build && npm run apidoc && node ./dist",
         "build": "tsc",
         "clean": "rimraf ./dist",
         "clean:build": "npm run clean && npm run build",
