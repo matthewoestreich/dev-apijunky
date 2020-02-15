@@ -1,4 +1,5 @@
-export default class Configuration {
+class EnvConfiguration {
+    /*
     public static readonly DB_HOST: string = process.env.DB_HOST || '';
 
     public static readonly DB_PORT: string = process.env.DB_PORT || '';
@@ -14,17 +15,42 @@ export default class Configuration {
     public static readonly JWT_EXPIRES_IN: string = process.env.JWT_EXPIRES_IN || '1 hour';
 
     public static readonly DB_DATABASE: string = process.env.DB_DATABASE || '';
+    */
+    [key: string]: string;
 
-    public static toResponseObject = (): object => {
-        return {
-            DB_HOST: Configuration.DB_HOST,
-            DB_PORT: Configuration.DB_PORT,
-            DB_DATABASE: Configuration.DB_DATABASE,
-            DB_USERNAME: Configuration.DB_USERNAME,
-            DB_PASSWORD: Configuration.DB_PASSWORD,
-            JWT_ENCRYPTION_KEY: Configuration.JWT_ENCRYPTION_KEY,
-            JWT_SIGNING_KEY: Configuration.JWT_SIGNING_KEY,
-            JWT_EXPIRES_IN: Configuration.JWT_EXPIRES_IN,
-        };
-    };
+    constructor() {
+        /*
+        const exclude = [
+            'TERM_PROGRAM',
+            'NODE',
+            'INIT_CWD',
+            'SHELL',
+            'TERM',
+            'TMPDIR',
+            'TERM_PROGRAM_VERSION',
+            'USER',
+            'SSH_AUTH_SOCK',
+            '__CF_USER_TEXT_ENCODING',
+            'PATH',
+            'PWD',
+            'LANG',
+            'XPC_FLAGS',
+            'XPC_SERVICE_NAME',
+            'HOME',
+            'SHLVL',
+            'LOGNAME',
+            'COLORTERM',
+            '_',
+        ];
+        */
+        const { env } = process;
+        const envKeys = Object.keys(env);
+
+        envKeys.forEach(ek => {
+            this[ek] = env[ek] || '';
+        });
+    }
 }
+
+const Configuration = new EnvConfiguration();
+export default Configuration;

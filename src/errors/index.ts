@@ -6,6 +6,7 @@ export {
     BadUserInputError,
     InvalidTokenError,
     CreateEntityError,
+    BadRequest,
 } from 'errors/customErrors';
 
 export { catchErrors } from 'errors/asyncCatch';

@@ -22,7 +22,7 @@ const initializeExpress = (): Server => {
     const app: Application = express();
 
     // Log each request we get
-    app.use(logger());
+    app.use(logger(true));
 
     // This is for publishing the apidocs package documentation
     app.use(express.static('dist/public'));

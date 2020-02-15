@@ -15,7 +15,7 @@ export const logger = (logEnvVars = false): RequestHandler => {
         console.log(req.params);
         if (logEnvVars) {
             console.log(c.cyan('********* CONFIG  ********'));
-            console.log(Configuration.toResponseObject());
+            console.log(Configuration);
         }
         console.log(`${'*'.repeat(80)}\r\n`);
         next();
