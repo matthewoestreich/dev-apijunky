@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "nodemon",
-        "dev:src": "npm run clean:build && npm run apidoc && node --inspect ./dist",
+        "dev:src": "npm i -D && npm run clean:build && node --inspect ./dist",
         "start": "npm run build && npm i apidoc && npm run apidoc && node ./dist",
         "build": "tsc",
         "clean": "rimraf ./dist",
@@ -52,6 +52,7 @@
         "@types/supertest": "^2.0.8",
         "@typescript-eslint/eslint-plugin": "^2.19.0",
         "@typescript-eslint/parser": "^2.19.0",
+        "apidoc": "^0.20.0",
         "chai": "^4.2.0",
         "coveralls": "^3.0.9",
         "eslint": "^6.8.0",
