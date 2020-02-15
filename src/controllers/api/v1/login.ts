@@ -14,7 +14,7 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
     const paramsCount = Object.keys(req.body).length;
 
     if (paramsCount !== expectedParamsCount || !req.body.un || !req.body.pw) {
-        throw new BadRequest({ invalidBody: req.body });
+        throw new BadRequest({ unnacceptableParams: req.body });
     }
 
     try {
@@ -24,19 +24,19 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
         if (!pwValidated) throw Error();
 
         const token = signAndEncryptToken({ id: foundUser.id });
-        if (!token) throw Error();
+        if (!token) throw Error('Invalid user.');
 
         const validFor = ms(Configuration.JWT_EXPIRES_IN);
-        if (!validFor) throw Error();
+        if (!validFor) throw Error('Corrupt token. [1a]');
 
         const expires = addMillisecondsToDate(new Date(Date.now()), validFor);
-        if (!expires) throw Error();
+        if (!expires) throw Error('Corrupt token. [1b]');
 
         const savedToken = await createEntity(JWT, { token, expires });
-        if (!savedToken) throw Error();
+        if (!savedToken) throw Error('Internal error. Contact support.');
 
         return res.respond(200, { token: savedToken.token });
     } catch (error) {
-        return res.respond(401, new BadRequest({ invalidRequest: true }));
+        return res.respond(401, new BadRequest({ invalidRequest: error.message }));
     }
 });
