@@ -8,12 +8,20 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import createDatabaseConnection from 'database/createConnection';
-import { routeNotFound, handleError, addRespondToResponse, authenticateUser } from 'middleware';
+import {
+    routeNotFound,
+    handleError,
+    addRespondToResponse,
+    authenticateUser,
+    logger,
+} from 'middleware';
 
 import { attachPublicRoutes, attachProtectedRoutes } from 'routes';
 
 const initializeExpress = (): Server => {
     const app: Application = express();
+
+    app.use(logger);
 
     // This is for publishing the apidocs package documentation
     app.use(express.static('dist/public'));
