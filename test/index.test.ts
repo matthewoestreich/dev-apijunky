@@ -17,7 +17,7 @@ describe('Volkswagen Test', () => {
     });
 });
 
-ExpectStatus(200, '/', 'GET /', server);
+ExpectStatus(408, '/', 'GET /', server);
 
 ExpectStatus(404, '/RouteThatDoesNotExist', 'GET /RouteThatDoesNotExist', server);
 
