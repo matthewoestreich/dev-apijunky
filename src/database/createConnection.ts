@@ -3,7 +3,7 @@ import { createConnection, Connection } from 'typeorm';
 import * as entities from 'entities';
 import Configuration from 'configuration';
 
-const createDatabaseConnection = (): Promise<Connection> =>
+const createDatabaseConnection = async (): Promise<Connection> =>
     createConnection({
         type: 'postgres',
         host: Configuration.DB_HOST,

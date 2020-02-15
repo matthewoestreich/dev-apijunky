@@ -32,7 +32,8 @@ const attachApiV1UserRoutes = (app: Application, middleware: RequestHandler[] = 
 };
 
 export const attachPublicRoutes = (app: Application): void => {
-    app.get('/', home.sayHelloWorld);
+    app.get('/', home.destroyRequest);
+    app.get('/favicon.ico', home.destroyRequest);
     attachApiV1PublicRoutes(app);
 };
 

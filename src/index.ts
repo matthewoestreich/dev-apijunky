@@ -12,6 +12,7 @@ import {
     routeNotFound,
     handleError,
     addRespondToResponse,
+    addIdToRequest,
     authenticateUser,
     logger,
 } from 'middleware';
@@ -21,8 +22,11 @@ import { attachPublicRoutes, attachProtectedRoutes } from 'routes';
 const initializeExpress = (): Server => {
     const app: Application = express();
 
-    // Log each request we get
-    app.use(logger(true));
+    // Adds an id to each request, accessable as req.__reqId
+    app.use(addIdToRequest);
+
+    // Log each request we get to console
+    app.use(logger());
 
     // This is for publishing the apidocs package documentation
     app.use(express.static('dist/public'));
@@ -39,14 +43,15 @@ const initializeExpress = (): Server => {
     app.use(routeNotFound);
     app.use(handleError);
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    const server = app.listen(process.env.PORT || 3000, async () => {
-        try {
-            await createDatabaseConnection();
-        } catch (err) /* istanbul ignore next */ {
-            console.log(err);
-            server.close();
-        }
+    const server = app.listen(process.env.PORT || 3000, (): void => {
+        (async (): Promise<void> => {
+            try {
+                await createDatabaseConnection();
+            } catch (err) /* istanbul ignore next */ {
+                console.log(err);
+                server.close();
+            }
+        })();
     });
 
     return server;

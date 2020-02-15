@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import ms from 'ms';
+import { red } from 'chalk';
 
 import { catchErrors, BadRequest } from 'errors';
 import { User, JWT } from 'entities';
 import { createEntity, findEntityOrThrow } from 'utils/typeorm';
 import { signAndEncryptToken } from 'utils/token';
-import { addMillisecondsToDate } from 'utils/general';
+import { addMillisecondsToDate } from 'utils/dateTime';
 
 import Configuration from 'configuration';
 
@@ -37,6 +38,7 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
 
         return res.respond(200, { token: savedToken.token });
     } catch (error) {
-        return res.respond(401, new BadRequest({ invalidRequest: error.message }));
+        console.log(red(error));
+        return res.respond(401, new BadRequest({ invalidRequest: true }));
     }
 });
