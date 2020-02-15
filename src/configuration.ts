@@ -11,7 +11,7 @@ export default class Configuration {
 
     public static readonly JWT_SIGNING_KEY: string = process.env.JWT_SIGNING_KEY || '';
 
-    public static readonly JWT_EXPIRES_IN: string = process.env.JWT_EXPIRES_IN || '';
+    public static readonly JWT_EXPIRES_IN: string = process.env.JWT_EXPIRES_IN || '1 hour';
 
     public static readonly DB_DATABASE: string = process.env.DB_DATABASE || '';
 }
