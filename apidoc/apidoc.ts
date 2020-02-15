@@ -1,4 +1,32 @@
 /**
+ * @apiDefine authHeaderExample
+ * @apiHeaderExample {json} Authorization Header:
+ *     {
+ *       "Authorization": "Bearer y0ur_JWT_t0k3n"
+ *     }
+ */
+
+/**
+ * @apiDefine userSuccess
+ * @apiSuccess {String} id Id of the User.
+ * @apiSuccess {String} username Username of the User.
+ * @apiSuccess {String} createdAt Date when the User was created.
+ * @apiSuccess {String} updatedAt Date when the User was last updated.
+ */
+
+/**
+ * @apiDefine userSuccessResponseExample
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *         "id": 1,
+ *         "username": "xx.john.doe.xx",
+ *         "createdAt": "1970-01-01T16:32:34.650Z",
+ *         "updatedAt": "1980-01-01T16:32:34.650Z"
+ *     }
+ */
+
+/**
  * @api {post} /api/v1/login Authentication
  * @apiVersion 0.0.1
  * @apiName Authentication
@@ -8,8 +36,13 @@
  * @apiParam {String} pw User's password.
  *
  * @apiSuccess {Object} token Object with single key, 'token', which contains the Bearer token which must be sent to protected routes.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *         "token": "s0m3_jwT_t0k3n"
+ *     }
  *
- * @apiError 401 Returns 401 status on bad authentication request.
+ * @apiError (401) 401 Returns 401 status on bad authentication request.
  */
 
 /**
@@ -19,10 +52,11 @@
  * @apiGroup User
  *
  * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
+ * @apiUse authHeaderExample
  *
  * @apiSuccess {String} Test Returns `Test`.
  *
- * @apiError (401) Bad Request  Returns 401 status on bad authentication request.
+ * @apiError (401) 401 Returns 401 status on bad authentication request.
  */
 
 /**
@@ -32,10 +66,12 @@
  * @apiGroup User
  *
  * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
+ * @apiUse authHeaderExample
  *
- * @apiSuccess {Object} user Returns created user object (minus password) This is for testing purposes.
+ * @apiUse userSuccess
+ * @apiUse userSuccessResponseExample
  *
- * @apiError (401) Bad Request  Returns 401 status on bad authentication request.
+ * @apiError (401) 401 Returns 401 status on bad authentication request.
  */
 
 /**
@@ -45,11 +81,13 @@
  * @apiGroup User
  *
  * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
+ * @apiUse authHeaderExample
  *
  * @apiParam {String} un Username of account you want to create.
  * @apiParam {String} pw Password of account you want to create.
  *
- * @apiSuccess {Object} Returns created user object (minus password).
+ * @apiUse userSuccess
+ * @apiUse userSuccessResponseExample
  *
  * @apiError (401) 401 Returns 401 status on bad authentication request.
  */
@@ -61,10 +99,12 @@
  * @apiGroup User
  *
  * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
+ * @apiUse authHeaderExample
  *
  * @apiParam {String} un Username of the user you want to find.
  *
- * @apiSuccess {Object} Returns found user object.
+ * @apiUse userSuccess
+ * @apiUse userSuccessResponseExample
  *
  * @apiError (401) 401 Returns 401 status on bad authentication request.
  */
