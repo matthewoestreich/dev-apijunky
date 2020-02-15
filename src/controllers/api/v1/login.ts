@@ -7,6 +7,8 @@ import { createEntity, findEntityOrThrow } from 'utils/typeorm';
 import { signAndEncryptToken } from 'utils/token';
 import { addMillisecondsToDate } from 'utils/general';
 
+import Configuration from 'configuration';
+
 export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Response) => {
     try {
         const foundUser = await findEntityOrThrow(User, { where: { username: req.body.un } });
@@ -17,7 +19,7 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
         }
 
         const token = signAndEncryptToken({ id: foundUser.id });
-        const validFor = ms(process.env.JWT_EXPIRES_IN);
+        const validFor = ms(Configuration.JWT_EXPIRES_IN);
         const expires = addMillisecondsToDate(new Date(Date.now()), validFor);
         const savedToken = await createEntity(JWT, { token, expires });
         return res.respond(200, { token: savedToken.token });

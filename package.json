@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "nodemon",
-        "dev:src": "npm run clean:build && node --inspect ./dist",
+        "dev:src": "npm run clean:build && npm run apidoc && node --inspect ./dist",
         "start": "npm run build && node ./dist",
         "build": "tsc",
         "clean": "rimraf ./dist",
@@ -13,7 +13,7 @@
         "tsc:init": "npm run build -- --init",
         "test": "nyc mocha",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-        "apidoc": "apidoc --input src/ --output apidoc/"
+        "apidoc": "apidoc --input src/ --output dist/public/apidoc"
     },
     "repository": {
         "type": "git",

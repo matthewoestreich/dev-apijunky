@@ -15,6 +15,8 @@ import { attachPublicRoutes, attachProtectedRoutes } from 'routes';
 const initializeExpress = (): Server => {
     const app: Application = express();
 
+    app.use(express.static('dist/public'));
+
     app.use(cors());
     app.use(helmet());
     app.use(express.json());
