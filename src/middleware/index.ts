@@ -1,6 +1,5 @@
-export { routeNotFound } from 'middleware/routeNotFound';
-export { handleError } from 'middleware/errorHandlers';
+export { handleError, routeNotFound } from 'middleware/errorHandlers';
 export { addRespondToResponse } from 'middleware/response';
-export { authenticateUser } from 'middleware/authentication';
+export { authorizeUser } from 'middleware/authorization';
 export { logger } from 'middleware/logger';
 export { addIdToRequest } from 'middleware/request';

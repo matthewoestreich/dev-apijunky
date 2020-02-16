@@ -16,7 +16,7 @@ const attachApiV1PublicRoutes = (app: Application): void => {
     app.use(API_PATHS.v1.root, apiV1PublicRouter);
 };
 
-const attachApiV1UserRoutes = (app: Application, middleware: RequestHandler[] = []): void => {
+const attachApiV1UserRoutes = (app: Application, middleware: RequestHandler[]): void => {
     /**
      * @path /api/v1/user/
      */
@@ -37,9 +37,6 @@ export const attachPublicRoutes = (app: Application): void => {
     attachApiV1PublicRoutes(app);
 };
 
-export const attachProtectedRoutes = (
-    app: Application,
-    middleware: RequestHandler[] = [],
-): void => {
+export const attachPrivateRoutes = (app: Application, middleware: RequestHandler[]): void => {
     attachApiV1UserRoutes(app, middleware);
 };

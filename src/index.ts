@@ -13,11 +13,11 @@ import {
     handleError,
     addRespondToResponse,
     addIdToRequest,
-    authenticateUser,
+    authorizeUser,
     logger,
 } from 'middleware';
 
-import { attachPublicRoutes, attachProtectedRoutes } from 'routes';
+import { attachPublicRoutes, attachPrivateRoutes } from 'routes';
 
 const initializeExpress = (): Server => {
     const app: Application = express();
@@ -28,7 +28,7 @@ const initializeExpress = (): Server => {
     // Log each request we get to console
     app.use(logger());
 
-    // This is for publishing the apidocs package documentation
+    // This is for publishing apidocs documentation
     app.use(express.static('dist/public'));
 
     app.use(cors());
@@ -38,7 +38,7 @@ const initializeExpress = (): Server => {
     app.use(addRespondToResponse);
 
     attachPublicRoutes(app);
-    attachProtectedRoutes(app, [authenticateUser]);
+    attachPrivateRoutes(app, [authorizeUser]);
 
     app.use(routeNotFound);
     app.use(handleError);

@@ -1,5 +1,5 @@
 import { ErrorRequestHandler, Request, Response, NextFunction } from 'express';
-import { CustomError, CustomErrorParams } from 'errors';
+import { CustomError, CustomErrorParams, RouteNotFoundError } from 'errors';
 
 export const handleError: ErrorRequestHandler = <T extends CustomErrorParams>(
     error: T,
@@ -20,4 +20,8 @@ export const handleError: ErrorRequestHandler = <T extends CustomErrorParams>(
           };
 
     res.respond(clientError.status, { error: clientError });
+};
+
+export const routeNotFound = (req: Request, _res: Response, next: NextFunction): void => {
+    next(new RouteNotFoundError(req.originalUrl));
 };

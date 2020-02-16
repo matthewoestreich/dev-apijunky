@@ -10,7 +10,7 @@ const getAuthTokenFromRequest = (req: Request): string | null => {
     return bearer === 'Bearer' && token ? token : null;
 };
 
-export const authenticateUser = catchErrors(
+export const authorizeUser = catchErrors(
     async (req: Request, _res: Response, next: NextFunction) => {
         const token = getAuthTokenFromRequest(req);
         if (!token) {
