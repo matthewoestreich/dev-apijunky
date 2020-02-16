@@ -9,9 +9,9 @@ export { addMillisecondsToDate, DateExtended } from 'utils/dateTime';
 export { encrypt, decrypt } from 'utils/encryptor';
 
 /**
- * From /utils/generic
+ * From omit.ts
  */
-export { omit } from 'utils/generic';
+export { omit } from 'utils/omit';
 
 /**
  * From guid.ts
@@ -24,11 +24,11 @@ export { newGuid } from 'utils/guid';
 export { validateToken, signAndEncryptToken, signToken, removeExpiredToken } from 'utils/token';
 
 /**
- * From typeorm.ts
+ * From /utils/typeorm
  */
 export { findEntity, findEntityOrThrow, createEntity, deleteEntity } from 'utils/typeorm';
 
 /**
  * From validation.ts
  */
-export { default as is, generateErrors } from 'utils/validation';
+export { default as is, generateErrors } from 'utils/typeorm/validation';
