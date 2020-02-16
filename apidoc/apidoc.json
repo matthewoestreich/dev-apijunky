@@ -1,11 +1,11 @@
 {
-    "name": "[ts-api]",
+    "name": "[dev.apijunky.com]",
     "version": "0.0.1",
     "description": "This is a repo for learning how to do this the right way!",
-    "title": "ts-api docs",
-    "url": "https://tin-fire.herokuapp.com",
+    "title": "dev.apijunky.com docs",
+    "url": "https://dev.apijunky.com",
     "header": {
-        "title": "ts-api",
+        "title": "dev.apijunky.com",
         "filename": "header.md"
       },
       "footer": {
