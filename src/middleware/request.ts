@@ -1,5 +1,5 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express';
-import { newGuid } from 'utils';
+import { createGuid } from 'utils';
 
 export const addIdToRequest: RequestHandler = (
     req: Request,
@@ -7,7 +7,7 @@ export const addIdToRequest: RequestHandler = (
     next: NextFunction,
 ) => {
     const dateTime = Date.now();
-    const guid = newGuid();
+    const guid = createGuid();
     req.__reqId = `${dateTime}.${guid}`;
     next();
 };

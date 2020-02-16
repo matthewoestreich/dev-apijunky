@@ -16,7 +16,7 @@ export { omit } from 'utils/omit';
 /**
  * From guid.ts
  */
-export { newGuid } from 'utils/guid';
+export { createGuid } from 'utils/guid';
 
 /**
  * From /utils/token

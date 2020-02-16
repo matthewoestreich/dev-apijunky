@@ -9,4 +9,5 @@ export {
     BadRequest,
 } from 'errors/customErrors';
 
+export { InvalidEnvironmentalConfiguration } from 'errors/InvalidEnvironmentalConfiguration';
 export { catchErrors } from 'errors/asyncCatch';

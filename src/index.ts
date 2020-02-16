@@ -7,7 +7,6 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import createDatabaseConnection from 'database/createConnection';
 import {
     routeNotFound,
     handleError,
@@ -17,9 +16,13 @@ import {
     logger,
 } from 'middleware';
 
+import createDatabaseConnection from 'database/createConnection';
 import { attachPublicRoutes, attachPrivateRoutes } from 'routes';
+import Configuration from 'configuration';
 
 const initializeExpress = (): Server => {
+    Configuration.init();
+
     const app: Application = express();
 
     // Adds an id to each request, accessable as req.__reqId
