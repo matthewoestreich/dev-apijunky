@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://tin-fire.herokuapp.com/docs">https://tin-fire.herokuapp.com/docs</a>
+  <a href="https://dev.apijunky.com/docs">https://dev.apijunky.com/docs</a>
 <p align="center">TypeScript | Express | Mocha | Chai | NYC & Istanbul | Prettier | ESLint | apiDoc</p>
 
 <p align="center">
