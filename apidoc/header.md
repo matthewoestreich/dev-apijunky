@@ -1,1 +1,1 @@
-[ts-api](https://github.com/oze4/ts-api)
+[GitHub Repo](https://github.com/oze4/dev-apijunky)

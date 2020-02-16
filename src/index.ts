@@ -22,7 +22,6 @@ import Configuration from 'configuration';
 
 const initializeExpress = (): Server => {
     Configuration.init();
-
     const app: Application = express();
 
     // Adds an id to each request, accessable as req.__reqId
@@ -46,7 +45,7 @@ const initializeExpress = (): Server => {
     app.use(routeNotFound);
     app.use(handleError);
 
-    const server = app.listen(process.env.PORT || 3000, (): void => {
+    const server = app.listen(Configuration.HOST_PORT, (): void => {
         (async (): Promise<void> => {
             try {
                 await createDatabaseConnection();

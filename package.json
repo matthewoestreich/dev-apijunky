@@ -4,14 +4,14 @@
     "description": "heroku test node.js app",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon --exec 'npm run dev:src' --ignore src/**/*.spec.ts --ext ts --watch src",
+        "dev": "nodemon --exec 'npm run dev:src' --ignore 'src/**/*.spec.ts' --ext ts --watch src",
         "dev:src": "npm run clean:build  && node --inspect ./dist",
         "start": "npm i -g apidoc && npm run build && npm run apidoc && node ./dist",
         "build": "tsc",
         "clean": "rimraf ./dist",
         "clean:build": "npm run clean && npm run build",
         "tsc:init": "npm run build -- --init",
-        "test": "nyc mocha",
+        "test": "nyc mocha --spec test/**/*.test.ts -r ts-node/register -r source-map-support/register -t 2000 --full-trace -b",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
         "apidoc": "apidoc --config ./apidoc/ --input apidoc/ --output dist/public/docs"
     },
@@ -71,6 +71,15 @@
         "supertest": "^4.0.2",
         "ts-node": "^8.6.2",
         "tsconfig-paths": "^3.9.0"
+    },
+    "nyc" : {
+        "include": ["src/**/*.ts"],
+        "exclude": ["src/utils/typeorm/validation.ts", "src/docs/**/*.*"],
+        "extension": [".ts"],
+        "require": ["ts-node/register"],
+        "reporter": ["text", "html", "lcov"],
+        "sourceMap": "true",
+        "instrument": "true"
     },
     "_moduleDirectories": [
         "src",

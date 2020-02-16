@@ -6,9 +6,9 @@ class EnvironmentalConfiguration {
     readonly HOST_PORT: string = process.env.HOST_PORT || '3000';
     readonly DB_HOST: string = process.env.DB_HOST || 'localhost';
     readonly DB_PORT: string = process.env.DB_PORT || '5432';
-    readonly DB_USERNAME: string = process.env.DB_USERNAME || 'admin';
-    readonly DB_PASSWORD: string = process.env.DB_PASSWORD || 'admin';
-    readonly DB_DATABASE: string = process.env.DB_DATABASE || 'test';
+    readonly DB_USERNAME: string = process.env.DB_USERNAME || 'apijunky';
+    readonly DB_PASSWORD: string = process.env.DB_PASSWORD || '@piJunky123';
+    readonly DB_DATABASE: string = process.env.DB_DATABASE || 'devapijunky';
     readonly JWT_EXPIRES_IN: string = process.env.JWT_EXPIRES_IN || '10 minutes'; // <-- uses ms.js notation
     readonly JWT_ENCRYPTION_KEY: string = process.env.JWT_ENCRYPTION_KEY || '';
     readonly JWT_SIGNING_KEY: string = process.env.JWT_SIGNING_KEY || '';
