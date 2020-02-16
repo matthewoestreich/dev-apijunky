@@ -12,8 +12,8 @@ import bcrypt from 'bcrypt';
 
 @Entity()
 class User extends BaseEntity {
-    validateHash = (suppliedPassword: string): boolean => {
-        return bcrypt.compareSync(suppliedPassword, this.password);
+    validatePassword = (password: string): boolean => {
+        return bcrypt.compareSync(password, this.password);
     };
 
     @PrimaryGeneratedColumn()

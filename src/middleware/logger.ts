@@ -2,7 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 import c from 'chalk';
 
 import Configuration from 'configuration';
-import { DateExtended as FriendlyDate } from 'utils/dateTime';
+import { DateExtended as FriendlyDate } from 'utils';
 import { RequestLog } from 'objects';
 
 export const logger = (logEnvVars = false): RequestHandler => {

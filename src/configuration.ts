@@ -3,10 +3,8 @@ import { StringMap } from 'objects';
 class EnvConfiguration extends StringMap {
     constructor() {
         super();
-        const { env } = process;
-        const envKeys = Object.keys(env);
-        envKeys.forEach(ek => {
-            this[ek] = env[ek] || '';
+        Object.keys(process.env).forEach(k => {
+            this[k] = process.env[k] || '';
         });
     }
 }

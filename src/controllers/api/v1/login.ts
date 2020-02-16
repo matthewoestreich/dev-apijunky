@@ -4,9 +4,7 @@ import { red } from 'chalk';
 
 import { catchErrors, BadRequest } from 'errors';
 import { User, JWT } from 'entities';
-import { createEntity, findEntityOrThrow } from 'utils/typeorm';
-import { signAndEncryptToken } from 'utils/token';
-import { addMillisecondsToDate } from 'utils/dateTime';
+import { createEntity, findEntityOrThrow, signAndEncryptToken, addMillisecondsToDate } from 'utils';
 
 import Configuration from 'configuration';
 
@@ -20,8 +18,8 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
 
     try {
         const foundUser = await findEntityOrThrow(User, { where: { username: req.body.un } });
-        const pwValidated = foundUser.validateHash(req.body.pw);
 
+        const pwValidated = foundUser.validatePassword(req.body.pw);
         if (!pwValidated) throw Error();
 
         const token = signAndEncryptToken({ id: foundUser.id });

@@ -1,5 +1,5 @@
 import { RequestHandler, Request, Response, NextFunction } from 'express';
-import { newGuid } from 'utils/guid';
+import { newGuid } from 'utils';
 
 export const addIdToRequest: RequestHandler = (
     req: Request,

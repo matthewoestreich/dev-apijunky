@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { catchErrors, CustomError } from 'errors';
 import { User } from 'entities';
 
-import { createEntity, findEntityOrThrow } from 'utils/typeorm';
+import { createEntity, findEntityOrThrow } from 'utils';
 
 export const createTestUser = catchErrors(async (_req: Request, res: Response) => {
     try {
