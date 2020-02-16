@@ -15,7 +15,7 @@ We parse environmental variables into an [configuration object](https://github.c
 
 The only variables which we do not supply values for are `process.env.JWT_ENCRYPTION_KEY` and `process.env.JWT_SIGNING_KEY`. If these values are `undefined`, we throw an error [during configuration init](https://github.com/oze4/dev-apijunky/blob/master/src/index.ts#L24).
 
-| Environmental Variable           | Default Value (as `string`) | Notes                                           |
+| Environmental Variable           | Default Value <br /> <small>(as `string`)</small> | Notes                                           |
 | -------------------------------- | -------------------------- | ----------------------------------------------- |
 | `process.env.NODE_ENV`           | development                 |                                                 |
 | `process.env.HOST_PORT`          | 3000                        |                                                 |
