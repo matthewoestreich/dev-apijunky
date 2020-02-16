@@ -1,9 +1,9 @@
 import 'mocha';
 import request from 'supertest';
 import { expect } from 'chai';
+import { red } from 'chalk';
 
 import { server } from '../src';
-import is from '../src/utils/validation';
 
 import { ExpectStatus } from './helpers';
 
@@ -21,4 +21,4 @@ ExpectStatus(408, '/', 'GET /', server);
 
 ExpectStatus(404, '/RouteThatDoesNotExist', 'GET /RouteThatDoesNotExist', server);
 
-ExpectStatus(401, '/api/v1/user/test', 'GET /api/v1/user/test **NEED TO REVISIT THIS**', server);
+ExpectStatus(401, '/api/v1/user/test', `GET /api/v1/user/test ${red('**NEED TO REVISIT THIS**')}`, server);
