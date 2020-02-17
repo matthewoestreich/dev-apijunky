@@ -2,15 +2,33 @@
   <a href="https://dev.apijunky.com/docs">https://dev.apijunky.com/docs</a>
 
 <p align="center">
-  <img src="/svg/node.svg" alt="Image" width="50">
-  <img src="/svg/express.svg" alt="Image" width="75" height="40">
-  <img src="/svg/typescript.svg" alt="Image" width="50">
-  <img src="/svg/mocha.svg" alt="Image" width="50">
-  <img src="/svg/chai.svg" alt="Image" width="50">
-  <img src="/svg/eslint.svg" alt="Image" width="50">
-  <img src="/svg/prettier.svg" alt="Image" width="50">
-  <img src="/svg/nodemon.svg" alt="Image" width="50">
-  <img src="/svg/istanbul.svg" alt="Image" width="50">
+  <a href="https://nodejs.org/en/">
+    <img src="/svg/node.svg" alt="Image" width="50">
+  </a>
+  <a href="https://expressjs.com/">
+    <img src="/svg/express.svg" alt="Image" width="75" height="40">
+  </a>
+  <a href="https://www.typescriptlang.org/">
+    <img src="/svg/typescript.svg" alt="Image" width="55">
+  </a>
+  <a href="https://mochajs.org/">
+    <img src="/svg/mocha.svg" alt="Image" width="50">
+  </a>
+  <a href="https://www.chaijs.com/">
+    <img src="/svg/chai.svg" alt="Image" width="50">
+  </a>
+  <a href="https://eslint.org/">
+    <img src="/svg/eslint.svg" alt="Image" width="61">
+  </a>
+  <a href="https://prettier.io/">
+    <img src="/svg/prettier.svg" alt="Image" width="52">
+  </a>
+  <a href="https://nodemon.io/">
+    <img src="/svg/nodemon.svg" alt="Image" width="48">
+  </a>
+  <a href="https://istanbul.js.org/">
+    <img src="/svg/istanbul.svg" alt="Image" width="53">
+  </a>
 </p>
 
 <p align="center">
