@@ -1,13 +1,22 @@
 <p align="center">
   <a href="https://dev.apijunky.com/docs">https://dev.apijunky.com/docs</a>
-<p align="center">TypeScript | Express | Mocha | Chai | NYC & Istanbul | Prettier | ESLint | apiDoc</p>
+
+<p align="center">
+  <img src="/svg/node.svg" alt="Image" width="50">
+  <img src="/svg/express.svg" alt="Image" width="75" height="40">
+  <img src="/svg/typescript.svg" alt="Image" width="50">
+  <img src="/svg/mocha.svg" alt="Image" width="50">
+  <img src="/svg/chai.svg" alt="Image" width="50">
+  <img src="/svg/eslint.svg" alt="Image" width="50">
+  <img src="/svg/prettier.svg" alt="Image" width="50">
+  <img src="/svg/nodemon.svg" alt="Image" width="50">
+  <img src="/svg/istanbul.svg" alt="Image" width="50">
+</p>
 
 <p align="center">
   <a href="https://travis-ci.org/oze4/dev-apijunky"><img title="Build Status" src="https://travis-ci.org/oze4/dev-apijunky.svg?branch=master" ></a>
   <a href="https://coveralls.io/github/oze4/dev-apijunky?branch=master"><img title="Coverage Status" src="https://coveralls.io/repos/github/oze4/dev-apijunky/badge.svg?branch=master" ></a>  
 </p>
-
-
 
 ---
 
