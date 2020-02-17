@@ -7,9 +7,11 @@
   <a href="https://coveralls.io/github/oze4/dev-apijunky?branch=master"><img title="Coverage Status" src="https://coveralls.io/repos/github/oze4/dev-apijunky/badge.svg?branch=master" ></a>  
 </p>
 
+
+
 ---
 
-# Table of Contents
+# Table of Contents 
 
  - [Default Configuration](#default-configuration)
  - [To Do](#to-do)
