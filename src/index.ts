@@ -49,7 +49,7 @@ const initializeExpress = (): Server => {
     app.use(routeNotFound);
     app.use(handleError);
 
-    const server = app.listen(Configuration.HOST_PORT, (): void => {
+    const server = app.listen(process.env.PORT || Configuration.HOST_PORT, (): void => {
         (async (): Promise<void> => {
             try {
                 await createDatabaseConnection();
