@@ -1,8 +1,8 @@
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
 import { JWT } from 'entities';
-import { InvalidTokenError } from 'errors';
-import { findEntityOrThrow, decrypt, removeExpiredToken } from 'utils';
+import { InvalidTokenError, ExpiredTokenError } from 'errors';
+import { findEntityOrThrow, decrypt, removeTokenById } from 'utils';
 
 import Configuration from 'configuration';
 
@@ -20,7 +20,8 @@ export const validateToken = async (token: string): Promise<string | object | vo
             throw new Error(rawToken);
         } catch (error) {
             if (error instanceof TokenExpiredError) {
-                await removeExpiredToken(dbJWT.id);
+                await removeTokenById(dbJWT.id);
+                throw new ExpiredTokenError();
             }
             throw new InvalidTokenError();
         }

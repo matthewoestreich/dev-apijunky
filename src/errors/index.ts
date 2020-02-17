@@ -5,6 +5,7 @@ export {
     EntityNotFoundError,
     BadUserInputError,
     InvalidTokenError,
+    ExpiredTokenError,
     CreateEntityError,
     BadRequest,
 } from 'errors/customErrors';

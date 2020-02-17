@@ -14,12 +14,14 @@ class EnvironmentalConfiguration {
     readonly JWT_SIGNING_KEY: string = process.env.JWT_SIGNING_KEY || '';
 
     init = (): EnvironmentalConfiguration => {
-        const config = new EnvironmentalConfiguration();
+        const c = new EnvironmentalConfiguration();
         const missing = [];
-        if (config.JWT_ENCRYPTION_KEY === '') missing.push('JWT_ENCRYPTION_KEY');
-        if (config.JWT_SIGNING_KEY === '') missing.push('JWT_SIGNING_KEY');
+
+        if (c.JWT_ENCRYPTION_KEY === '') missing.push('JWT_ENCRYPTION_KEY');
+        if (c.JWT_SIGNING_KEY === '') missing.push('JWT_SIGNING_KEY');
+
         if (missing.length) throw new InvalidEnvironmentalConfiguration({ missing });
-        return config;
+        return c;
     };
 }
 /* eslint-disable lines-between-class-members */

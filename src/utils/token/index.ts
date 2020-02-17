@@ -1,3 +1,3 @@
 export { signToken, signAndEncryptToken } from 'utils/token/signing';
-export { removeExpiredToken } from 'utils/token/removal';
+export { removeTokenById, autoRemoveExpiredTokens, findExpiredTokens } from 'utils/token/removal';
 export { validateToken } from 'utils/token/validation';

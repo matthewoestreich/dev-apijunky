@@ -11,10 +11,11 @@ export const logger = (logEnvVars = false): RequestHandler => {
 
         let data: RequestLog = {
             ID: req.__reqId,
-            TIME: new FriendlyDate(FriendlyDate.now()).toFriendlyDate(),
+            TIME: FriendlyDate.nowToFriendlyDateTime(),
+            TO: req.originalUrl,
             HEADERS: req.headers,
             BODY: req.body || {},
-            PARAMS: req.params,
+            QUERY_PARAMS: req.query,
         };
 
         if (logEnvVars) {

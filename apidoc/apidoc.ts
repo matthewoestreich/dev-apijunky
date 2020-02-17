@@ -34,6 +34,12 @@
  *
  * @apiParam {String} un User's username.
  * @apiParam {String} pw User's password.
+ * 
+ * @apiHeader {String} Content-Type application/json
+ * @apiHeaderExample {json} Authorization Header:
+ *     {
+ *       "Content-Type": "application/json"
+ *     }
  *
  * @apiSuccess {Object} token Object with single key, 'token', which contains the Bearer token which must be sent to protected routes.
  * @apiSuccessExample {json} Success-Response:

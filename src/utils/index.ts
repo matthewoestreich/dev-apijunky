@@ -21,7 +21,14 @@ export { createGuid } from 'utils/guid';
 /**
  * From /utils/token
  */
-export { validateToken, signAndEncryptToken, signToken, removeExpiredToken } from 'utils/token';
+export {
+    validateToken,
+    signAndEncryptToken,
+    signToken,
+    removeTokenById,
+    autoRemoveExpiredTokens,
+    findExpiredTokens,
+} from 'utils/token';
 
 /**
  * From /utils/typeorm

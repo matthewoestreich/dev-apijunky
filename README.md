@@ -12,6 +12,10 @@
 # Table of Contents
 
  - [Default Configuration](#default-configuration)
+ - [To Do](#to-do)
+   - [Tie token to user account](#tie-token-to-user-account)
+   - [Encrypt token at rest](#Encrypt-token-at-rest)
+   - [Fix token errors](#fix-token-errors)
 
 ---
 
@@ -33,5 +37,19 @@ The only variables which we do not supply a default value for are `process.env.J
 | `process.env.DB_PASSWORD` | @piJunky123 | <ul><li>Default database password</li><li>***We do not create or modify any account, we simply attempt to login with this password***</li></ul> |
 | `process.env.DB_DATABASE` | devapijunky | <ul><li>Default database</li><li>***We do not attempt to create any database, we simply attempt to login to this database***</li></ul> |
 | `process.env.JWT_EXPIRES_IN` | "10 minutes" | <ul><li>In [ms.js](https://github.com/zeit/ms) notation</li><li>If the value contains a space, it must be surrounded in double quotes (within your `.env` file)</li><li>If you are using Heroku, or something like it, you do not have to use double quotes ***within their online portal***</li></ul> |
-| :rotating_light:`process.env.JWT_ENCRYPTION_KEY`:rotating_light: | `undefined` | **Will throw an error if `undefined`** |
-| :rotating_light:`process.env.JWT_SIGNING_KEY`:rotating_light: | `undefined` | **Will throw an error if `undefined`**  |
+| :rotating_light:`process.env.JWT_ENCRYPTION_KEY` | `undefined` | **Will throw an error if `undefined`** |
+| :rotating_light:`process.env.JWT_SIGNING_KEY` | `undefined` | **Will throw an error if `undefined`**  |
+
+---
+
+## To Do
+
+##### Tie token to user account
+  - [ ] Check for existing token on login
+  - [ ] Remove existing token and tie new token to user
+
+##### Encrypt token at rest
+  - [ ] Use `bcrypt` to hash token before saving. Use JWT_ENCRYPTION_KEY to accomplish this
+
+##### Fix token errors
+  - [ ] Throw expired token error versus invalid token error when a token is expired

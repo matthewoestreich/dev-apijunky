@@ -65,3 +65,9 @@ export class InvalidTokenError extends CustomError {
         super(message, 'INVALID_TOKEN', 401);
     }
 }
+
+export class ExpiredTokenError extends CustomError {
+    constructor(message = 'Authentication token is expired.', data = {}) {
+        super(message, 'EXPIRED_TOKEN', 401, data);
+    }
+}

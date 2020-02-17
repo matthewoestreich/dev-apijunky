@@ -5,7 +5,12 @@ export const addMillisecondsToDate = (date: Date, ms: number): Date => {
 };
 
 export class DateExtended extends Date {
-    toFriendlyDate = (): string => {
+    toFriendlyDateTime = (): string => {
         return `${this.toLocaleDateString()} ${this.toLocaleTimeString()}`;
+    };
+
+    static nowToFriendlyDateTime = (): string => {
+        const d = new DateExtended(DateExtended.now());
+        return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
     };
 }
