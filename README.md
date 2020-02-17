@@ -44,12 +44,12 @@ The only variables which we do not supply a default value for are `process.env.J
 
 ## To Do
 
-##### Tie token to user account
+#### Tie token to user account
   - [ ] Check for existing token on login
   - [ ] Remove existing token and tie new token to user
 
-##### Encrypt token at rest
+#### Encrypt token at rest
   - [ ] Use `bcrypt` to hash token before saving. Use JWT_ENCRYPTION_KEY to accomplish this
 
-##### Fix token errors
+#### Fix token errors
   - [ ] Throw expired token error versus invalid token error when a token is expired
