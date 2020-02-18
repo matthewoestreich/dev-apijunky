@@ -12,7 +12,7 @@
   <a href="https://www.typescriptlang.org/">
     <img src="/docs/github/svg/typescript.svg" alt="Image" width="55">
   </a>
-  <a href="https://www.typescriptlang.org/">
+  <a href="https://www.postgresql.org/">
     <img src="/docs/github/svg/postgres.svg" alt="Image" width="55">
   </a>
   <a href="https://mochajs.org/">
