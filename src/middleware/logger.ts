@@ -3,7 +3,7 @@ import c from 'chalk';
 
 import Configuration from 'configuration';
 import { DateExtended as FriendlyDate } from 'utils';
-import { RequestLog } from 'objects';
+import { RequestLog } from 'types';
 
 export const logger = (logEnvVars = false): RequestHandler => {
     return (req: Request, _res: Response, next: NextFunction): void => {

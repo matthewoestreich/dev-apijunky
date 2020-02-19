@@ -6,6 +6,7 @@ import { Server } from 'http';
 import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 
 import {
     routeNotFound,
@@ -36,6 +37,7 @@ const initializeExpress = (): Server => {
     app.use(express.urlencoded({ extended: false }));
     app.use(cors());
     app.use(helmet());
+    app.use(compression());
     app.use(addIdToRequest);
     app.use(addRespondToResponse);
     app.use(logger());
