@@ -99,6 +99,7 @@
         ],
         "exclude": [
             "src/utils/typeorm/validation.ts",
+            "src/routes/api/v1/book/**/*.*",
             "src/docs/**/*.*"
         ],
         "extension": [

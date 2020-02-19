@@ -3,7 +3,7 @@ import 'dotenv/config';
 import 'reflect-metadata';
 
 import { Server } from 'http';
-import express, { Application } from 'express';
+import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -18,10 +18,9 @@ import {
 } from 'middleware';
 
 import createDatabaseConnection from 'database/createConnection';
-import { attachPublicRoutes /* , attachPrivateRoutes */ } from 'routes';
+import { attachPublicRoutes, attachApiRoutes } from 'routes';
 import Configuration from 'configuration';
 import { autoRemoveExpiredTokens } from 'utils';
-import { attachApiRoutes } from 'routes/index';
 
 const initializeExpress = (shouldLog = false): Server => {
     // Initialize our configuration
@@ -32,7 +31,7 @@ const initializeExpress = (shouldLog = false): Server => {
     // Time is in minutes
     autoRemoveExpiredTokens(10);
 
-    const app: Application = express();
+    const app = express();
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
@@ -45,7 +44,6 @@ const initializeExpress = (shouldLog = false): Server => {
 
     attachPublicRoutes(app);
     attachApiRoutes(app);
-    // attachPrivateRoutes(app, [authorizeUser]);
 
     // This is for publishing apidocs documentation
     app.use(express.static('dist/public'));

@@ -14,10 +14,12 @@ import loginRouter from 'routes/api/v1/login';
 
 const v1Router = express.Router();
 
+// Set the "root prefix" for this router
+// aka /api/v1/*
 v1Router.use('/v1', v1Router);
 
 /**
- *
+ * @route /api/v1/login
  */
 v1Router.use(loginRouter);
 

@@ -14,8 +14,14 @@
 
 import { Application } from 'express';
 
+import * as rootController from 'controllers/root';
 import apiRouter from 'routes/api';
 
 export const attachApiRoutes = (app: Application): void => {
     app.use(apiRouter);
+};
+
+export const attachPublicRoutes = (app: Application): void => {
+    app.get('/', rootController.destroyRequest);
+    app.get('/favicon.ico', rootController.destroyRequest);
 };
