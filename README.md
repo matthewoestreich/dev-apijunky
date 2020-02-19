@@ -113,7 +113,7 @@ The only variables which we do not supply a default value for are `process.env.J
 
 ##### Structure
 
- - :file_folder: root
+ - :file_folder: src
    - :file_folder: [classes](#folder-classes)
    - :file_folder: [controllers](#folder-controllers)
    - :file_folder: [database](#folder-database)
