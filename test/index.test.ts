@@ -1,4 +1,3 @@
-import 'mocha';
 import request from 'supertest';
 import { expect } from 'chai';
 import { red } from 'chalk';
