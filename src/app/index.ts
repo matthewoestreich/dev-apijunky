@@ -13,14 +13,15 @@ import {
     handleError,
     addRespondToResponse,
     addIdToRequest,
-    authorizeUser,
+    // authorizeUser,
     logger,
 } from 'middleware';
 
 import createDatabaseConnection from 'database/createConnection';
-import { attachPublicRoutes, attachPrivateRoutes } from 'routes';
+import { attachPublicRoutes /* , attachPrivateRoutes */ } from 'routes';
 import Configuration from 'configuration';
 import { autoRemoveExpiredTokens } from 'utils';
+import { attachApiRoutes } from 'routes/index';
 
 const initializeExpress = (shouldLog = false): Server => {
     // Initialize our configuration
@@ -42,11 +43,12 @@ const initializeExpress = (shouldLog = false): Server => {
     app.use(addRespondToResponse);
     app.use(logger(shouldLog));
 
+    attachPublicRoutes(app);
+    attachApiRoutes(app);
+    // attachPrivateRoutes(app, [authorizeUser]);
+
     // This is for publishing apidocs documentation
     app.use(express.static('dist/public'));
-
-    attachPublicRoutes(app);
-    attachPrivateRoutes(app, [authorizeUser]);
 
     app.use(routeNotFound);
     app.use(handleError);

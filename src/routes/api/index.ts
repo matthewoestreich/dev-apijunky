@@ -6,17 +6,12 @@
  *
  */
 
-import express from 'express';
+import { Router } from 'express';
 
-import apiVersionOneMainRouter from 'routes/api/v1';
+import v1Router from 'routes/api/v1';
 
-const apiRouter = express.Router();
+const apiRouter = Router();
 
-apiRouter.route('/api');
-
-/**
- * @route /api/v1
- */
-apiRouter.use(apiVersionOneMainRouter);
+apiRouter.use('/api', v1Router);
 
 export default apiRouter;

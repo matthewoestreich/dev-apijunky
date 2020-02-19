@@ -8,14 +8,27 @@
 
 import express from 'express';
 
-import apiVersionOneUserRouter from 'routes/api/v1/user';
+import userRouter from 'routes/api/v1/user';
+import bookRouter from 'routes/api/v1/book';
+import loginRouter from 'routes/api/v1/login';
 
-const apiVersionOneMainRouter = express.Router();
-apiVersionOneMainRouter.route('/v1');
+const v1Router = express.Router();
+
+v1Router.use('/v1', v1Router);
+
+/**
+ *
+ */
+v1Router.use(loginRouter);
 
 /**
  * @route /api/v1/user
  */
-apiVersionOneMainRouter.use('/user', apiVersionOneUserRouter);
+v1Router.use(userRouter);
 
-export default apiVersionOneMainRouter;
+/**
+ * @route /api/v1/book
+ */
+v1Router.use(bookRouter);
+
+export default v1Router;

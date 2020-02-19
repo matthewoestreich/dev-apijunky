@@ -2,7 +2,7 @@ import express, { Application, RequestHandler } from 'express';
 
 import { API_PATHS } from 'constants/routes';
 
-import * as home from 'controllers/home';
+import * as home from 'controllers/root';
 import * as apiV1 from 'controllers/api/v1';
 
 const attachApiV1PublicRoutes = (app: Application): void => {

@@ -31,3 +31,7 @@ export const findUser = catchErrors(async (req: Request, res: Response) => {
     const fu = await findEntityOrThrow(User, { where: { username: req.query.un } });
     res.respond(200, fu.toResponseObject());
 });
+
+export const test = catchErrors((_req: Request, res: Response) => {
+    res.respond(200, 'Test');
+});
