@@ -13,8 +13,12 @@ import { authorizeUser } from 'middleware';
 
 const userRouter = Router();
 
-// This sets the "root prefix" for this router
-userRouter.use('/user', userRouter);
+/**
+ *
+ * - Set 'root prefix' for this router
+ * - Add middleware to this router here
+ */
+userRouter.use('/user', [authorizeUser], userRouter);
 
 /** ======================================================================================================
  *
@@ -24,13 +28,13 @@ userRouter.use('/user', userRouter);
  */
 
 // POST /api/v1/user/createtestuser
-userRouter.post('/createtestuser', [authorizeUser], userController.createTestUser);
+userRouter.post('/createtestuser', userController.createTestUser);
 
 // POST /api/v1/user/create
-userRouter.post('/create', [authorizeUser], userController.createNewUser); // ?un=username&pw=password
+userRouter.post('/create', userController.createNewUser); // ?un=username&pw=password
 
 // POST /api/v1/user/find
-userRouter.post('/find', [authorizeUser], userController.findUser); // ?un=username
+userRouter.post('/find', userController.findUser); // ?un=username
 // =======================================================================================================
 
 /** ======================================================================================================
@@ -41,7 +45,7 @@ userRouter.post('/find', [authorizeUser], userController.findUser); // ?un=usern
  */
 
 // GET /api/v1/user/test
-userRouter.get('/test', [authorizeUser], userController.test);
+userRouter.get('/test', userController.test);
 // =======================================================================================================
 
 export default userRouter;
