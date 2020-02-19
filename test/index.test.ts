@@ -3,9 +3,11 @@ import request from 'supertest';
 import { expect } from 'chai';
 import { red } from 'chalk';
 
-import { server } from '../src';
+import initializeExpress from '../src/app';
 
 import { ExpectStatus } from './helpers';
+
+const server = initializeExpress(false);
 
 after(done => server.close(done));
 
