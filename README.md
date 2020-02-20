@@ -50,6 +50,7 @@
  - [Default Configuration](#default-configuration)
  - [To Do](#to-do)
    - [Project redesign](#redesign)
+   - [Routing](#routing)
    - [Tie token to user account](#tie-token-to-user-account)
    - [Encrypt token at rest](#Encrypt-token-at-rest)
    - [Fix token errors](#fix-token-errors)
@@ -86,16 +87,20 @@ The only variables which we do not supply a default value for are `process.env.J
 # To Do
 
 #### Redesign
-  - [ ] Restructure app into the following [structure](#new-project-structure)
+  - :construction: Restructure app into the following [structure](#new-project-structure)
+
+#### Routing
+  - :heavy_check_mark:Reorganize and restructure routes/routing
+
 #### Tie token to user account
-  - [ ] Check for existing token on login
-  - [ ] Remove existing token and tie new token to user
+  - :construction: Check for existing token on login
+  - :construction: Remove existing token and tie new token to user
 
 #### Encrypt token at rest
-  - [ ] Use `bcrypt` to hash token before saving. Use JWT_ENCRYPTION_KEY to accomplish this
+  - :construction: Use `bcrypt` to hash token before saving. Use JWT_ENCRYPTION_KEY to accomplish this
 
 #### Fix token errors
-  - [ ] Throw expired token error versus invalid token error when a token is expired
+  - :construction: Throw expired token error versus invalid token error when a token is expired
 
 <br/>
 
@@ -114,14 +119,13 @@ The only variables which we do not supply a default value for are `process.env.J
 ##### Structure
 
  - :file_folder: src
+   - :file_folder: [app](#folder-app)
    - :file_folder: [classes](#folder-classes)
    - :file_folder: [controllers](#folder-controllers)
    - :file_folder: [database](#folder-database)
      - :file_folder: [entities (models)](#sub-folder-entities)
-     - :memo: createConnection.ts
    - :file_folder: [interfaces](#folder-interfaces)
    - :file_folder: [jobs](#folder-jobs)
-   - :file_folder::question: [loaders](#folder-loaders)
    - :file_folder: [routes](#folder-routes)
    - :file_folder: [services](#folder-services)
    - :file_folder: [types](#folder-types)
@@ -135,44 +139,44 @@ The only variables which we do not supply a default value for are `process.env.J
     <th>Use Case</th>
   </tr>
   <tr>
+    <td id="folder-app">app</td>
+    <td>Main Express app and loaders</td>
+  </tr>
+  <tr>
     <td id="folder-classes">classes</td>
-    <td>TypeScript classes files</td>
+    <td>Custom TypeScript classes</td>
   </tr>
   <tr>
     <td id="folder-controllers">controllers</td>
-    <td><code>TODO</code></td>
+    <td>Route controllers. The Express context should stop here - this is the defining line where the Express context ends and the business logic/data access layer begins</td>
   </tr>
   <tr>
     <td id="folder-database">database</td>
-    <td><code>TODO</code></td>
+    <td>Database specific files. Connection file, etc...</td>
   </tr>
   <tr>
     <td id="sub-folder-entities">database/entities</td>
-    <td><code>TODO</code></td>
+    <td>Since we are using <code>typeorm</code>, this is where we will store all of our entities</td>
   </tr>
   <tr>
     <td id="folder-interfaces">interfaces</td>
-    <td><code>TODO</code></td>
+    <td>Custom TypeScript interfaces</td>
   </tr>
   <tr>
     <td id="folder-jobs">jobs</td>
-    <td><code>TODO</code></td>
-  </tr>
-  <tr>
-    <td id="folder-loaders">loaders</td>
-    <td><code>TODO</code></td>
+    <td>Cron jobs/misc jobs</td>
   </tr>
   <tr>
     <td id="folder-routes">routes</td>
-    <td><code>TODO</code></td>
+    <td>Routing specific files</td>
   </tr>
   <tr>
     <td id="folder-services">services</td>
-    <td><code>TODO</code></td>
+    <td>Services that controllers will call go here. This is like the middleman between controllers and data access</td>
   </tr>
   <tr>
     <td id="folder-types">types</td>
-    <td><code>TODO</code></td>
+    <td>Custom TypeScript types</td>
   </tr>
   <tr>
     <td id="folder-typings">typings</td>

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { validateToken } from 'utils';
 import { catchErrors, InvalidTokenError } from 'errors';
-import { User } from 'entities';
+import { User } from 'database/entities';
 
 const getAuthTokenFromRequest = (req: Request): string | null => {
     const header = req.get('Authorization') || '';

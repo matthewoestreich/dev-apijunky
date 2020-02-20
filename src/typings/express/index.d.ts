@@ -3,7 +3,7 @@ declare namespace Express {
         respond: (status: number, data: object | string) => void;
     }
     export interface Request {
-        currentUser: import('entities').User;
+        currentUser: import('database/entities').User;
         __reqId: string;
     }
 }

@@ -1,7 +1,7 @@
 import { LessThan } from 'typeorm';
 import { cyan, magenta, green } from 'chalk';
 
-import { JWT } from 'entities';
+import { JWT } from 'database/entities';
 import { deleteEntity, DateExtended } from 'utils';
 
 const { log } = console;

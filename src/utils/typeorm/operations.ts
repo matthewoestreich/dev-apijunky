@@ -1,7 +1,7 @@
 /* eslint-disable no-dupe-class-members */
 import { FindOneOptions } from 'typeorm/find-options/FindOneOptions';
 
-import { User, JWT } from 'entities';
+import { User, JWT } from 'database/entities';
 import { EntityNotFoundError } from 'errors';
 // import { TokenExpiredError } from 'jsonwebtoken';
 // import { generateErrors } from 'utils/validation';

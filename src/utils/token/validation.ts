@@ -1,6 +1,6 @@
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
-import { JWT } from 'entities';
+import { JWT } from 'database/entities';
 import { InvalidTokenError, ExpiredTokenError } from 'errors';
 import { findEntityOrThrow, decrypt, removeTokenById } from 'utils';
 

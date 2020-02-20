@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { catchErrors, CustomError } from 'errors';
-import { User } from 'entities';
+import { User } from 'database/entities';
 
 import { createEntity, findEntityOrThrow } from 'utils';
 
