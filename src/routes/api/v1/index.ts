@@ -6,16 +6,19 @@
  *
  */
 
-import express from 'express';
+import { Router } from 'express';
 
 import userRouter from 'routes/api/v1/user';
 import bookRouter from 'routes/api/v1/book';
 import loginRouter from 'routes/api/v1/login';
 
-const v1Router = express.Router();
+const v1Router = Router();
 
-// Set the "root prefix" for this router
-// aka /api/v1/*
+/**
+ *
+ * - Set 'root prefix' for this router
+ * - Add middleware to this router here, if needed
+ */
 v1Router.use('/v1', v1Router);
 
 /**

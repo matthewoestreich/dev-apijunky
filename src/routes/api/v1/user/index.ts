@@ -16,7 +16,7 @@ const userRouter = Router();
 /**
  *
  * - Set 'root prefix' for this router
- * - Add middleware to this router here
+ * - Add middleware to this router here, if needed
  */
 userRouter.use('/user', [authorizeUser], userRouter);
 
