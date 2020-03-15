@@ -29,7 +29,6 @@ class JWT extends BaseEntity {
     @OneToOne(
         _ => User,
         user => user.jwt,
-        { onDelete: 'SET NULL' },
     )
     user: User | null;
 

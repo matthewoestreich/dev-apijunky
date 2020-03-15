@@ -44,6 +44,7 @@ export const authorizeUser = catchErrors(
          * as the sent JWT Bearer token (as req.rawJwt).  This means we should be able
          * to just see if `req.user.token.token` exists
          */
+        console.log('[middleware/authorize.ts][req.user]:', req.user);
         const token = req.rawJwt;
         if (!token) {
             throw new InvalidTokenError('Authentication token not found.');

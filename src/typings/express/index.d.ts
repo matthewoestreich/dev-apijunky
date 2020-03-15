@@ -5,7 +5,7 @@ declare namespace Express {
     export interface Request {
         bodyParametersExist: (expectedParameters: string[]) => boolean;
 
-        user: import('database/entities/User').default;
+        user: import('database/entities/User').default | null;
 
         __reqId: string;
 

@@ -8,8 +8,6 @@ import { User, JWT } from 'database/entities';
 import Encryptr from 'classes/Encryptr';
 import { addMillisecondsToDate } from 'utils';
 
-import DateExtended from 'classes/DateExtended';
-
 import Configuration from 'configuration';
 
 /*
@@ -58,11 +56,6 @@ export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Res
 
         const validFor = ms(Configuration.JWT_EXPIRES_IN || '10 minutes');
         const expires = addMillisecondsToDate(new Date(Date.now()), validFor);
-
-        console.log(
-            '[services/login.ts][tokenExpiresAt]:',
-            DateExtended.toFriendlyDateTime(expires),
-        );
 
         foundUser.jwt = new JWT(token, expires, foundUser);
 

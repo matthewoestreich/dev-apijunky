@@ -1,7 +1,7 @@
 import { Application, RequestHandler, Request, Response, NextFunction } from 'express';
 
-import User from 'database/entities/User';
 import { createGuid } from 'utils';
+import { JWT } from 'database/entities';
 
 const addIdToRequest: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
     const dateTime = Date.now();
@@ -60,18 +60,9 @@ const addUserToRequest: RequestHandler = async (
     next: NextFunction,
 ) => {
     if (req.rawJwt) {
-        const foundUser = await User.findOne({ where: { jwt: { token: req.rawJwt } } });
-        if (foundUser) {
-            req.user = foundUser;
-        }
+        const foundJwt = await JWT.findOne({ where: { token: req.rawJwt }, relations: ['user'] });
+        req.user = foundJwt?.user ?? null;
     }
-    const { log } = console;
-    log();
-    log('[middleware/request.ts][rawJwt]:', req.rawJwt);
-    log();
-    log('[middleware/request.ts][req.user]:', req.user);
-    log();
-    log();
     next();
 };
 
