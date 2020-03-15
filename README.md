@@ -48,16 +48,6 @@
 # Table of Contents 
 
  - [Default Configuration](#default-configuration)
- - [To Do](#to-do)
-   - [Project redesign](#redesign)
-   - [Routing](#routing)
-   - [Tie token to user account](#tie-token-to-user-account)
-   - [Encrypt token at rest](#Encrypt-token-at-rest)
-   - [Fix token errors](#fix-token-errors)
-- [New Project Structure](#new-project-structure)
-   - [Legend](#legend)
-   - [Structure](#structure)
-   - [Definitions](#definitions)
 
 <br/>
 
@@ -84,114 +74,11 @@ The only variables which we do not supply a default value for are `process.env.J
 
 <br/>
 
-# To Do
-
-#### Redesign
-  - :construction: Restructure app into the following [structure](#new-project-structure)
-
-#### Routing
-  - :heavy_check_mark:Reorganize and restructure routes/routing
-
-#### Tie token to user account
-  - :construction: Check for existing token on login
-  - :construction: Remove existing token and tie new token to user
-
-#### Encrypt token at rest
-  - :construction: Use `bcrypt` to hash token before saving. Use JWT_ENCRYPTION_KEY to accomplish this
-
-#### Fix token errors
-  - :construction: Throw expired token error versus invalid token error when a token is expired
-
-<br/>
-
-# New Project Structure
-
-<sup>🚧❗️work in progress❗️🚧</sup>
-
-##### Legend
-
-| Icon | Meaning |
-| ---: | :--- |
-| :question: | Better solution may be possible |
-| :file_folder: | Directory/Folder |
-| :memo: | File |
-
-##### Structure
-
- - :file_folder: src
-   - :file_folder: [app](#folder-app)
-   - :file_folder: [classes](#folder-classes)
-   - :file_folder: [controllers](#folder-controllers)
-   - :file_folder: [database](#folder-database)
-     - :file_folder: [entities (models)](#sub-folder-entities)
-   - :file_folder: [interfaces](#folder-interfaces)
-   - :file_folder: [jobs](#folder-jobs)
-   - :file_folder: [routes](#folder-routes)
-   - :file_folder: [services](#folder-services)
-   - :file_folder: [types](#folder-types)
-   - :file_folder: [typings](#folder-typings)
-
-##### Definitions
-
-<table>
-  <tr>
-    <th>Item</th>
-    <th>Use Case</th>
-  </tr>
-  <tr>
-    <td id="folder-app">app</td>
-    <td>Main Express app and loaders</td>
-  </tr>
-  <tr>
-    <td id="folder-classes">classes</td>
-    <td>Custom TypeScript classes</td>
-  </tr>
-  <tr>
-    <td id="folder-controllers">controllers</td>
-    <td>Route controllers. The Express context should stop here - this is the defining line where the Express context ends and the business logic/data access layer begins</td>
-  </tr>
-  <tr>
-    <td id="folder-database">database</td>
-    <td>Database specific files. Connection file, etc...</td>
-  </tr>
-  <tr>
-    <td id="sub-folder-entities">database/entities</td>
-    <td>Since we are using <code>typeorm</code>, this is where we will store all of our entities</td>
-  </tr>
-  <tr>
-    <td id="folder-interfaces">interfaces</td>
-    <td>Custom TypeScript interfaces</td>
-  </tr>
-  <tr>
-    <td id="folder-jobs">jobs</td>
-    <td>Cron jobs/misc jobs</td>
-  </tr>
-  <tr>
-    <td id="folder-routes">routes</td>
-    <td>Routing specific files</td>
-  </tr>
-  <tr>
-    <td id="folder-services">services</td>
-    <td>Services that controllers will call go here. This is like the middleman between controllers and data access</td>
-  </tr>
-  <tr>
-    <td id="folder-types">types</td>
-    <td>Custom TypeScript types</td>
-  </tr>
-  <tr>
-    <td id="folder-typings">typings</td>
-    <td>TypeScript definition (<code>.d.ts</code>) files</td>
-  </tr>
-</table>
-<sup><sub><a href="#structure">Back to structure</a></sub></sup>
-
-<br/>
-
 ---
 
 <p align="center">
   <small>
-    Built with ❤️ by <a href="https://mattoestreich.com">Matt Oestreich</a>
+    Hiring? Give me a shout <a href="https://mattoestreich.com">https://mattoestreich.com</a>
   </small>
 </p>
 
