@@ -6,15 +6,25 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     BeforeInsert,
+    OneToOne,
+    JoinColumn,
 } from 'typeorm';
 
 import bcrypt from 'bcrypt';
 
+import { JWT } from 'database/entities';
+
 @Entity()
 class User extends BaseEntity {
-    validatePassword = (password: string): boolean => {
-        return bcrypt.compareSync(password, this.password);
-    };
+    constructor(username?: string, password?: string) {
+        super();
+        if (username) {
+            this.username = username;
+        }
+        if (password) {
+            this.password = password;
+        }
+    }
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -31,10 +41,22 @@ class User extends BaseEntity {
     @UpdateDateColumn({ type: 'timestamp', nullable: true })
     updatedAt: Date;
 
+    @OneToOne(
+        _ => JWT,
+        jwt => jwt.user,
+        { cascade: true, eager: true, onDelete: 'SET NULL' },
+    )
+    @JoinColumn()
+    jwt: JWT;
+
     @BeforeInsert()
     hashPassword = (): void => {
         const salt = bcrypt.genSaltSync(11);
         this.password = bcrypt.hashSync(this.password, salt);
+    };
+
+    validatePassword = (password: string): boolean => {
+        return bcrypt.compareSync(password, this.password);
     };
 
     toResponseObject = (): object => {

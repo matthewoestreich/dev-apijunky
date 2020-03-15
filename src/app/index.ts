@@ -8,38 +8,39 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 
-import {
-    routeNotFound,
-    handleError,
-    addRespondToResponse,
-    addIdToRequest,
-    // authorizeUser,
-    logger,
-} from 'middleware';
-
+import { autoRemoveExpiredTokens } from 'services/jwt';
 import createDatabaseConnection from 'database/createConnection';
 import { attachPublicRoutes, attachApiRoutes } from 'routes';
 import Configuration from 'configuration';
-import { autoRemoveExpiredTokens } from 'utils';
+
+import {
+    routeNotFound,
+    handleError,
+    attachResponseExtensionProps,
+    attachRequestExtensionProps,
+    logger,
+} from 'middleware';
 
 const initializeExpress = (shouldLog = false): Server => {
     // Initialize our configuration
     // This checks for empty env variables
     Configuration.init();
 
-    // Checks for expired tokens, and auto removes them
-    // Time is in minutes
-    autoRemoveExpiredTokens(10);
+    // In ms.js format
+    autoRemoveExpiredTokens('1 minute');
 
     const app = express();
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
+
     app.use(cors());
     app.use(helmet());
     app.use(compression());
-    app.use(addIdToRequest);
-    app.use(addRespondToResponse);
+
+    attachRequestExtensionProps(app);
+    attachResponseExtensionProps(app);
+
     app.use(logger(shouldLog));
 
     attachPublicRoutes(app);

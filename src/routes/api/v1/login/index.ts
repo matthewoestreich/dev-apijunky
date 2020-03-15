@@ -6,10 +6,11 @@
 
 import { Router } from 'express';
 
-import * as loginController from 'controllers/api/v1/login';
+import * as loginService from 'services/login';
+// import * as loginController from 'controllers/api/v1/login';
 
 const loginRouter = Router();
 
-loginRouter.post('/login', loginController.logUserInAndReturnToken);
+loginRouter.post('/login', loginService.logUserInAndReturnToken);
 
 export default loginRouter;

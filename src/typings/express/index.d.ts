@@ -3,7 +3,12 @@ declare namespace Express {
         respond: (status: number, data: object | string) => void;
     }
     export interface Request {
-        currentUser: import('database/entities').User;
+        bodyParametersExist: (expectedParameters: string[]) => boolean;
+
+        user: import('database/entities/User').default;
+
         __reqId: string;
+
+        rawJwt: string | null;
     }
 }

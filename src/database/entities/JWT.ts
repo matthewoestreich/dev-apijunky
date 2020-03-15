@@ -1,7 +1,22 @@
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+
+import { User } from 'database/entities';
 
 @Entity()
 class JWT extends BaseEntity {
+    constructor(token?: string, expires?: Date, user?: User) {
+        super();
+        if (user) {
+            this.user = user;
+        }
+        if (token) {
+            this.token = token;
+        }
+        if (expires) {
+            this.expires = expires;
+        }
+    }
+
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -10,6 +25,17 @@ class JWT extends BaseEntity {
 
     @Column({ type: 'timestamp' })
     expires: Date;
+
+    @OneToOne(
+        _ => User,
+        user => user.jwt,
+        { onDelete: 'SET NULL' },
+    )
+    user: User | null;
+
+    // decrypt = (): null => {
+    //     return null;
+    // };
 }
 
 export default JWT;

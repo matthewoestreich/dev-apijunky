@@ -3,14 +3,3 @@ export const addMillisecondsToDate = (date: Date, ms: number): Date => {
     dateObj.setMilliseconds(dateObj.getMilliseconds() + ms);
     return dateObj;
 };
-
-export class DateExtended extends Date {
-    toFriendlyDateTime = (): string => {
-        return `${this.toLocaleDateString()} ${this.toLocaleTimeString()}`;
-    };
-
-    static nowToFriendlyDateTime = (): string => {
-        const d = new DateExtended(DateExtended.now());
-        return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
-    };
-}
