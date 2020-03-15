@@ -7,16 +7,7 @@ import DateExtended from 'classes/DateExtended';
 
 const { log, trace } = console;
 
-export const removeTokenById = async (id: number | string): Promise<boolean> => {
-    try {
-        await JWT.delete(id);
-        return true;
-    } catch {
-        return false;
-    }
-};
-
-export const findExpiredTokens = async (): Promise<JWT[]> => {
+const findExpiredTokens = async (): Promise<JWT[]> => {
     const expiredTokens = await JWT.find({
         where: {
             expires: LessThan(new Date(Date.now())),
