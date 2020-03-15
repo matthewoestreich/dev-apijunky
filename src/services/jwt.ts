@@ -33,7 +33,7 @@ const logStars = (newLineFrontOrBack: 'front' | 'back', count: number, color: Ch
     }
 };
 
-export const autoRemoveExpiredTokens = (every: string): ReturnType<typeof setInterval> => {
+export const autoRemoveExpiredTokensEvery = (interval: string): ReturnType<typeof setInterval> => {
     return setInterval(() => {
         const tryRemoveExpiredTokens = async (): Promise<void> => {
             log(magenta(`${cyan(timeNow())}: Checking for expired tokens...`));
@@ -85,5 +85,5 @@ export const autoRemoveExpiredTokens = (every: string): ReturnType<typeof setInt
             logStars('back', 80, magenta);
             // log(magenta(`${'*'.repeat(80)}\r\n`));
         })();
-    }, ms(every)).unref();
+    }, ms(interval)).unref();
 };

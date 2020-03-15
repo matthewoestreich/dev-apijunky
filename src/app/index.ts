@@ -8,7 +8,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 
-import { autoRemoveExpiredTokens } from 'services/jwt';
+import { autoRemoveExpiredTokensEvery } from 'services/jwt';
 import createDatabaseConnection from 'database/createConnection';
 import { attachPublicRoutes, attachApiRoutes } from 'routes';
 import Configuration from 'configuration';
@@ -27,7 +27,7 @@ const initializeExpress = (shouldLog = false): Server => {
     Configuration.init();
 
     // In ms.js format
-    autoRemoveExpiredTokens('30 seconds');
+    autoRemoveExpiredTokensEvery('1 hour');
 
     const app = express();
 
