@@ -29,13 +29,6 @@ class JWT extends BaseEntity {
     // with the data in the database, it will calculate the offset
     // at the time of the query (which I hate).
     //
-    // For example, our database server is in heroku, in a different
-    // timezone than the environment I am using to test.  If I saved
-    // a token from the test environment, while the "prod" environment
-    // was running (using same db/tables/etc..), the prod environment
-    // would read the token expiration as the current time but in it's
-    // timezone.
-    //
     // If I saved something while in the Central time zone, it would
     // be displayed as:
     //  - In postgres: 2020-03-15 18:09:46
