@@ -8,17 +8,6 @@ import DateExtended from 'classes/DateExtended';
 const { log, trace } = console;
 const orange = keyword('orange');
 
-const findExpiredTokens = async (dateLessThan: Date): Promise<JWT[]> => {
-    const expiredTokens = await JWT.find({
-        where: {
-            expires: LessThan(dateLessThan),
-        },
-    });
-    return expiredTokens;
-};
-
-const timeNow = (): string => DateExtended.nowToFriendlyDateTime();
-
 const logStars = (newLineFrontOrBack: 'front' | 'back', count: number, color: Chalk): void => {
     const msg = color('*'.repeat(count));
     // eslint-disable-next-line default-case
@@ -33,23 +22,28 @@ const logStars = (newLineFrontOrBack: 'front' | 'back', count: number, color: Ch
     }
 };
 
+const findExpiredTokens = async (dateLessThan: Date): Promise<JWT[]> => {
+    const expiredTokens = await JWT.find({
+        where: {
+            expires: LessThan(dateLessThan),
+        },
+    });
+    return expiredTokens;
+};
+
+const friendlyTime = (): string => DateExtended.nowToFriendlyDateTime();
+
 export const autoRemoveExpiredTokensEvery = (interval: string): ReturnType<typeof setInterval> => {
     return setInterval(() => {
         const tryRemoveExpiredTokens = async (): Promise<void> => {
-            log(magenta(`${cyan(timeNow())}: Checking for expired tokens...`));
-
+            log(magenta(`${cyan(friendlyTime())}: Checking for expired tokens...`));
             const searchDate = new Date(Date.now());
-            log(
-                blueBright('  ~ Searching for dates less than:'),
-                yellow.bold(searchDate),
-                blueBright('~  '),
-            );
 
             const expiredTokens = await findExpiredTokens(searchDate);
 
             if (expiredTokens.length) {
                 try {
-                    log(`${magenta(timeNow())}: ${cyan('Removing the following tokens:')}`);
+                    log(`${magenta(friendlyTime())}: ${cyan('Removing the following tokens:')}`);
                     log(expiredTokens);
 
                     logStars('front', 80, blueBright);
@@ -67,23 +61,20 @@ export const autoRemoveExpiredTokensEvery = (interval: string): ReturnType<typeo
                 }
 
                 const expiredTokensRecheck = await findExpiredTokens(searchDate);
-
-                if (!expiredTokensRecheck.length) {
-                    log(green('Done removing tokens!'));
+                if (expiredTokensRecheck.length) {
+                    log(red(`Failed to remove expired tokens!:\r\n${expiredTokensRecheck}`));
                 } else {
-                    log(red('Failed to remove expired tokens!'));
+                    log(green('Done removing tokens!'));
                 }
             } else {
-                log(magenta(`${cyan(timeNow())}: No expired tokens found!`));
+                log(magenta(`${cyan(friendlyTime())}: No expired tokens found!`));
             }
         };
 
         (async (): Promise<void> => {
-            // log(magenta(`\r\n${'*'.repeat(80)}`));
             logStars('front', 80, magenta);
             await tryRemoveExpiredTokens();
             logStars('back', 80, magenta);
-            // log(magenta(`${'*'.repeat(80)}\r\n`));
         })();
     }, ms(interval)).unref();
 };
