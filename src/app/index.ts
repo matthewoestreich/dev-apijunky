@@ -27,7 +27,7 @@ const initializeExpress = (shouldLog = false): Server => {
     Configuration.init();
 
     // In ms.js format
-    autoRemoveExpiredTokens('1 minute');
+    // autoRemoveExpiredTokens('1 minute');
 
     const app = express();
 

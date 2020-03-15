@@ -30,7 +30,6 @@ const timeNow = (): string => DateExtended.nowToFriendlyDateTime();
 export const autoRemoveExpiredTokens = (every: string): ReturnType<typeof setInterval> => {
     return setInterval(() => {
         const tryRemoveExpiredTokens = async (): Promise<void> => {
-            // let expiredTokens: JWT[];
             log(magenta(`${cyan(timeNow())}: Checking for expired tokens...`));
             const expiredTokens = await findExpiredTokens();
             if (expiredTokens.length) {
