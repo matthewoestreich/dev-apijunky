@@ -23,12 +23,13 @@ class JWT extends BaseEntity {
     @Column('varchar', { unique: true })
     token: string;
 
-    @Column({ type: 'timestamp' })
+    @Column({ type: 'timestamp with time zone' })
     expires: Date;
 
     @OneToOne(
         _ => User,
         user => user.jwt,
+        { nullable: true },
     )
     user: User | null;
 
