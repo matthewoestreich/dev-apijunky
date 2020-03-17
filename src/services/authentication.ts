@@ -3,7 +3,7 @@ import jwt, { SignOptions } from 'jsonwebtoken';
 import ms from 'ms';
 import { red, yellow } from 'chalk';
 
-import { catchErrors, BadRequest } from 'errors';
+import { asyncCatch, BadRequest } from 'errors';
 import { User, JWT } from 'database/entities';
 import Encryptr from 'classes/Encryptr';
 import { addMillisecondsToDate } from 'utils';
@@ -32,7 +32,11 @@ const signAndEncryptToken = (payload: string | object | Buffer, options?: SignOp
     throw Error();
 };
 
-export const logUserInAndReturnToken = catchErrors(async (req: Request, res: Response) => {
+/**
+ * Authenticates user and returns a token.  If something goes wrong, like a user is not found
+ * etc... then an error is thrown.
+ */
+export const loginAndGetToken = asyncCatch(async (req: Request, res: Response) => {
     //
     // TODO: build a check to make sure token does not exist already before trying to create one
     //

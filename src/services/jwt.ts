@@ -33,6 +33,12 @@ const findExpiredTokens = async (dateLessThan: Date): Promise<JWT[]> => {
 
 const friendlyTime = (): string => DateExtended.nowToFriendlyDateTime();
 
+/**
+ * This method will remove expired tokens on an interval. The interval is defined
+ * in ms.js format, a string, like '10 minutes' or '30 seconds'
+ *
+ * @param interval {String} In ms.js format
+ */
 export const autoRemoveExpiredTokensEvery = (interval: string): ReturnType<typeof setInterval> => {
     return setInterval(() => {
         const tryRemoveExpiredTokens = async (): Promise<void> => {

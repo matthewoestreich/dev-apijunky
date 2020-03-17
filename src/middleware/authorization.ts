@@ -3,7 +3,7 @@ import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
 import Encryptr from 'classes/Encryptr';
 
-import { catchErrors, InvalidTokenError, ExpiredTokenError } from 'errors';
+import { asyncCatch, InvalidTokenError, ExpiredTokenError } from 'errors';
 import { User, JWT } from 'database/entities';
 
 import Configuration from 'configuration';
@@ -35,7 +35,7 @@ const validateToken = async (token: string): Promise<string | void> => {
     }
 };
 
-export const authorizeUser = catchErrors(
+export const authorizeUser = asyncCatch(
     async (req: Request, _res: Response, next: NextFunction) => {
         /**
          * TODO: Clean this up

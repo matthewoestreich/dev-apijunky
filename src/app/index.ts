@@ -9,6 +9,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 
 import { autoRemoveExpiredTokensEvery } from 'services/jwt';
+import attachLogger from 'services/logger';
 import createDatabaseConnection from 'database/createConnection';
 import { attachPublicRoutes, attachApiRoutes } from 'routes';
 import Configuration from 'configuration';
@@ -18,10 +19,10 @@ import {
     handleError,
     attachResponseExtensionProps,
     attachRequestExtensionProps,
-    logger,
+    // logger,
 } from 'middleware';
 
-const initializeExpress = (shouldLog = false): Server => {
+const initializeExpress = (): Server => {
     // Initialize our configuration
     // This checks for empty env variables
     Configuration.init();
@@ -31,17 +32,20 @@ const initializeExpress = (shouldLog = false): Server => {
 
     const app = express();
 
+    attachRequestExtensionProps(app);
+    attachResponseExtensionProps(app);
+
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
+
+    attachLogger(app);
 
     app.use(cors());
     app.use(helmet());
     app.use(compression());
 
-    attachRequestExtensionProps(app);
-    attachResponseExtensionProps(app);
-
-    app.use(logger(shouldLog));
+    // This is the 'old' console.log logger
+    // app.use(logger(shouldLog));
 
     attachPublicRoutes(app);
     attachApiRoutes(app);

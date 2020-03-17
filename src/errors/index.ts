@@ -11,4 +11,4 @@ export {
 } from 'errors/customErrors';
 
 export { InvalidEnvironmentalConfiguration } from 'errors/InvalidEnvironmentalConfiguration';
-export { catchErrors } from 'errors/asyncCatch';
+export { asyncCatch } from 'errors/asyncCatch';

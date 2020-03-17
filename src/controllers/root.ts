@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-import { catchErrors } from 'errors';
+import { asyncCatch } from 'errors';
 
-export const sayHelloWorld = catchErrors((_req: Request, res: Response): void => {
+export const sayHelloWorld = asyncCatch((_req: Request, res: Response): void => {
     res.respond(200, 'Hello, World!');
 });
 
