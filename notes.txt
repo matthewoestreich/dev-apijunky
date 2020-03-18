@@ -1,3 +1,0 @@
-https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way/
-
-https://medium.com/@sesitamakloe/how-we-structure-our-express-js-routes-58933d02e491

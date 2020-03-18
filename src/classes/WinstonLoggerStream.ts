@@ -1,6 +1,6 @@
 import { Logger } from 'winston';
 
-export default class LoggerStream {
+export default class WinstonLoggerStream {
     public WinstonLogger: Logger;
 
     constructor(winstonLogger: Logger) {

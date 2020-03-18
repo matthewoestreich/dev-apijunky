@@ -7,9 +7,10 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
+import { green, red } from 'chalk';
 
 import { autoRemoveExpiredTokensEvery } from 'services/jwt';
-import makeLogger from 'services/logger';
+import makeRequestLogger, { makeAppLogger, appLogger } from 'services/logger';
 import createDatabaseConnection from 'database/createConnection';
 import { attachPublicRoutes, attachApiRoutes } from 'routes';
 import Configuration from 'configuration';
@@ -19,7 +20,6 @@ import {
     handleError,
     attachResponseExtensionProps,
     attachRequestExtensionProps,
-    // logger,
 } from 'middleware';
 
 const initializeExpress = (): Server => {
@@ -38,14 +38,15 @@ const initializeExpress = (): Server => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
-    app.use(makeLogger('../../_logs/logs.log'));
+    // In order to use appLogger, import it from 'services/logger';
+    // This method creates a logger that is tied to `appLogger` within
+    // the logger service.
+    makeAppLogger('../../_logs/app.log');
+    app.use(makeRequestLogger('../../_logs/requests.log'));
 
     app.use(cors());
     app.use(helmet());
     app.use(compression());
-
-    // This is the 'old' console.log logger
-    // app.use(logger(shouldLog));
 
     attachPublicRoutes(app);
     attachApiRoutes(app);
@@ -56,12 +57,18 @@ const initializeExpress = (): Server => {
     app.use(routeNotFound);
     app.use(handleError);
 
-    const server = app.listen(process.env.PORT || Configuration.HOST_PORT, (): void => {
+    const port = process.env.PORT || Configuration.HOST_PORT;
+    const server = app.listen(port, (): void => {
         (async (): Promise<void> => {
             try {
                 await createDatabaseConnection();
-            } catch (err) /* istanbul ignore next */ {
-                console.log(err);
+                appLogger.info(
+                    green.bold(
+                        `\r\n\t\t\t🎉 Successfully connected to database!\t🎉\r\n\t\t\t🎉 Server listening on port '${port}'\t🎉`,
+                    ),
+                );
+            } catch (err) {
+                appLogger.error(red(err.stack));
                 server.close();
             }
         })();
