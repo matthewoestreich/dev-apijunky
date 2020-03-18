@@ -1,68 +1,59 @@
-import { Request, Response, NextFunction, RequestHandler, Application } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 
-import { createLogger, transports, format } from 'winston';
+import winston, { createLogger, transports, format } from 'winston';
 import morgan, { TokenIndexer } from 'morgan';
-import chalk from 'chalk';
 
 import path from 'path';
 
-const orange = chalk.keyword('orange');
+import LoggerStream from 'classes/LoggerStream';
 
-const winstonFileLogger = createLogger({
-    level: 'info',
-    transports: [
-        new transports.File({
-            filename: path.resolve(__dirname, '../../_logs/logs.log'),
-            maxsize: 20000000, // In bytes: 20mb
-            format: format.combine(
-                format.timestamp({ format: 'MM-YY-DD hh:mm:ssa' }),
-                format.json(),
-                format.prettyPrint(),
-            ),
-        }),
-    ],
+morgan.token('headers', (request, _response) => {
+    return JSON.stringify(request.headers);
 });
 
-const customMorganFormat = (tokens: TokenIndexer, req: Request, res: Response): string => {
-    morgan.token('all-headers', (reqq, _ress) => {
-        return JSON.stringify(JSON.parse(JSON.stringify(reqq.headers)), null, 2);
+morgan.token('body', (request, _response) => {
+    return JSON.stringify({ ...request.body });
+});
+
+const jsonFormat = (tokens: TokenIndexer, req: Request, res: Response): string => {
+    const head = tokens.headers(req, res) ?? '';
+    const bod = tokens.body(req, res) ?? '';
+
+    return JSON.stringify(
+        {
+            date: tokens.date(req, res, 'clf'),
+            remoteAddress: tokens['remote-addr'](req, res),
+            method: tokens.method(req, res),
+            url: tokens.url(req, res),
+            httpVersion: `HTTP/${tokens['http-version'](req, res)}`,
+            status: tokens.status(req, res),
+            contentLength: tokens.res(req, res, 'content-length'),
+            referrer: tokens.referrer(req, res),
+            userAgent: tokens['user-agent'](req, res),
+            responseTime: `${tokens['response-time'](req, res, 'ms')}ms`,
+            headers: JSON.parse(head),
+            body: JSON.parse(bod),
+        },
+        // null,
+        // 2,
+    );
+};
+
+const makeLogger = (logFilePath: string): RequestHandler => {
+    const winstonLogger = createLogger({
+        level: 'info',
+        format: format.combine(format.json(), format.prettyPrint()),
+        transports: [
+            new transports.Console(),
+            new winston.transports.File({
+                filename: path.resolve(__dirname, logFilePath),
+                maxsize: 20000000, // In bytes: 20mb
+            }),
+        ],
     });
 
-    const ref = tokens.referrer(req, res) ?? '-';
-    const remoteUser = tokens['remote-user'](req, res) ?? '-';
-
-    return [
-        chalk.cyan(tokens['remote-addr'](req, res)),
-        '-',
-        orange(remoteUser),
-        chalk.blue(tokens.date(req, res, 'clf')),
-        chalk.magenta(tokens.method(req, res)),
-        tokens.url(req, res),
-        `HTTP/${tokens['http-version'](req, res)}`,
-        tokens.status(req, res),
-        tokens.res(req, res, 'content-length'),
-        `'referrer: ${ref}'`,
-        tokens['user-agent'](req, res),
-        `${tokens['response-time'](req, res, 'ms')}ms`,
-    ].join(' ');
+    const loggerStream = new LoggerStream(winstonLogger);
+    return morgan(jsonFormat, { stream: loggerStream });
 };
 
-const winstonLogger = (): RequestHandler => {
-    return (req: Request, _res: Response, next: NextFunction): void => {
-        winstonFileLogger.info({
-            id: req.__reqId,
-            to: req.originalUrl,
-            headers: req.headers,
-            body: { ...req.body },
-            query: req.query,
-        });
-        next();
-    };
-};
-
-const attachLogger = (app: Application): void => {
-    app.use(morgan(customMorganFormat));
-    // app.use(winstonLogger());
-};
-
-export default attachLogger;
+export default makeLogger;

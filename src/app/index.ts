@@ -9,7 +9,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 
 import { autoRemoveExpiredTokensEvery } from 'services/jwt';
-import attachLogger from 'services/logger';
+import makeLogger from 'services/logger';
 import createDatabaseConnection from 'database/createConnection';
 import { attachPublicRoutes, attachApiRoutes } from 'routes';
 import Configuration from 'configuration';
@@ -38,7 +38,7 @@ const initializeExpress = (): Server => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
-    attachLogger(app);
+    app.use(makeLogger('../../_logs/logs.log'));
 
     app.use(cors());
     app.use(helmet());

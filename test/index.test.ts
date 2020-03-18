@@ -6,7 +6,7 @@ import initializeExpress from '../src/app';
 
 import { ExpectStatus } from './helpers';
 
-const server = initializeExpress(false);
+const server = initializeExpress();
 
 after(done => server.close(done));
 
