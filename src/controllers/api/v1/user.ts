@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { asyncCatch, CustomError } from 'errors';
+import { asyncCatch, CustomError, EntityNotFoundError } from 'errors';
 import { User } from 'database/entities';
 
 export const createTestUser = asyncCatch(async (_req: Request, res: Response) => {
@@ -24,7 +24,11 @@ export const createNewUser = asyncCatch(async (req: Request, res: Response) => {
 });
 
 export const findUser = asyncCatch(async (req: Request, res: Response) => {
-    const fu = await User.findOneOrFail({ where: { username: req.query.un } });
+    req.bodyParametersExist(['un']);
+    const fu = await User.findOne({ where: { username: req.body.un } });
+    if (!fu) {
+        throw new EntityNotFoundError('Entity');
+    }
     res.respond(200, fu.toResponseObject());
 });
 

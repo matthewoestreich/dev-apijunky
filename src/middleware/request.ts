@@ -2,6 +2,7 @@ import { Application, RequestHandler, Request, Response, NextFunction } from 'ex
 
 import { createGuid } from 'utils';
 import { JWT } from 'database/entities';
+import { getTokenFromRequestHeaders } from 'services/authorization';
 
 const addIdToRequest: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
     const dateTime = Date.now();
@@ -59,10 +60,18 @@ const addUserToRequest: RequestHandler = async (
     _res: Response,
     next: NextFunction,
 ) => {
-    if (req.rawJwt) {
-        const foundJwt = await JWT.findOne({ where: { token: req.rawJwt }, relations: ['user'] });
+    const tokenFromHeaders = getTokenFromRequestHeaders(req.headers);
+    if (tokenFromHeaders) {
+        const foundJwt = await JWT.findOne({
+            where: { token: tokenFromHeaders },
+            relations: ['user'],
+        });
         req.user = foundJwt?.user ?? null;
     }
+    // if (req.rawJwt) {
+    //     const foundJwt = await JWT.findOne({ where: { token: req.rawJwt }, relations: ['user'] });
+    //     req.user = foundJwt?.user ?? null;
+    // }
     next();
 };
 
@@ -74,16 +83,15 @@ const addUserToRequest: RequestHandler = async (
  * @param _res {express.Response}
  * @param next {express.NextFunction}
  */
-const addJwtToRequest: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
-    const header = req.get('Authorization') || '';
-    const [bearer, token] = header.split(' ');
-    req.rawJwt = bearer === 'Bearer' && token ? token : null;
-    next();
-};
+// const addJwtToRequest: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
+//     const header = req.get('Authorization') || '';
+//     const [bearer, token] = header.split(' ');
+//     req.rawJwt = bearer === 'Bearer' && token ? token : null;
+//     next();
+// };
 
 export const attachRequestExtensionProps = (app: Application): void => {
     app.use(addIdToRequest);
-    app.use(addJwtToRequest);
     app.use(addBodyParametersExistToRequest);
     app.use(addUserToRequest);
 };

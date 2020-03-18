@@ -26,9 +26,14 @@ morgan.token('body', (request, _response) => {
     return JSON.stringify({ ...request.body });
 });
 
+morgan.token('query', (request, _response) => {
+    return JSON.stringify({ ...request.query });
+});
+
 const jsonFormat = (tokens: TokenIndexer, req: Request, res: Response): string => {
     const head = tokens.headers(req, res) ?? '';
     const bod = tokens.body(req, res) ?? '';
+    const qry = tokens.query(req, res) ?? '';
 
     return JSON.stringify({
         date: tokens.date(req, res, 'clf'),
@@ -43,6 +48,7 @@ const jsonFormat = (tokens: TokenIndexer, req: Request, res: Response): string =
         responseTimeMs: tokens['response-time'](req, res, 'ms'),
         headers: JSON.parse(head),
         body: JSON.parse(bod),
+        query: JSON.parse(qry),
     });
 };
 

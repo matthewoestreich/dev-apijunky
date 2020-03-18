@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { IncomingHttpHeaders } from 'http';
 import jwt, { TokenExpiredError } from 'jsonwebtoken';
 
 import Encryptr from 'classes/Encryptr';
@@ -63,3 +64,12 @@ export const authorizeUser = asyncCatch(
         next();
     },
 );
+
+export const getTokenFromRequestHeaders = (headers: IncomingHttpHeaders): string | null => {
+    const authHeader = headers.authorization || '';
+    const [bearer, token] = authHeader.split(' ');
+    return bearer === 'Bearer' && token ? token : null;
+    // const header = req.get('Authorization') || '';
+    // const [bearer, token] = header.split(' ');
+    // req.rawJwt = bearer === 'Bearer' && token ? token : null;
+};

@@ -5,6 +5,7 @@ import Encryptr from 'classes/Encryptr';
 
 import { asyncCatch, InvalidTokenError, ExpiredTokenError } from 'errors';
 import { User, JWT } from 'database/entities';
+// import {  } from 'services/authorization';
 
 import Configuration from 'configuration';
 
@@ -44,8 +45,7 @@ export const authorizeUser = asyncCatch(
          * as the sent JWT Bearer token (as req.rawJwt).  This means we should be able
          * to just see if `req.user.token.token` exists
          */
-        console.log('[middleware/authorize.ts][req.user]:', req.user);
-        const token = req.rawJwt;
+        const token = req.user?.jwt.token;
         if (!token) {
             throw new InvalidTokenError('Authentication token not found.');
         }
