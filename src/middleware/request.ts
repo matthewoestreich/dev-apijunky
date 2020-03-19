@@ -1,7 +1,9 @@
 import { Application, RequestHandler, Request, Response, NextFunction } from 'express';
 
+import { appLogger } from 'services/logger';
 import { createGuid } from 'utils';
-import { JWT } from 'database/entities';
+import * as redis from 'services/redis';
+import { JWT, User } from 'database/entities';
 import { getTokenFromRequestHeaders } from 'services/authorization';
 
 const addIdToRequest: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
@@ -60,18 +62,22 @@ const addUserToRequest: RequestHandler = async (
     _res: Response,
     next: NextFunction,
 ) => {
-    const tokenFromHeaders = getTokenFromRequestHeaders(req.headers);
-    if (tokenFromHeaders) {
-        const foundJwt = await JWT.findOne({
-            where: { token: tokenFromHeaders },
-            relations: ['user'],
-        });
-        req.user = foundJwt?.user ?? null;
+    let foundUser: User | null;
+    const token = getTokenFromRequestHeaders(req.headers);
+
+    if (token) {
+        const foundJwt = await JWT.findOne({ where: { token }, relations: ['user'] });
+        foundUser = foundJwt?.user ?? null;
+        if (foundUser) {
+            try {
+                await redis.saveUser(foundUser?.jwt.token, foundUser);
+                appLogger.info('Saved user successfully!');
+            } catch (err) {
+                appLogger.error(`Unable to save user! ${err}`);
+            }
+        }
+        req.user = foundUser;
     }
-    // if (req.rawJwt) {
-    //     const foundJwt = await JWT.findOne({ where: { token: req.rawJwt }, relations: ['user'] });
-    //     req.user = foundJwt?.user ?? null;
-    // }
     next();
 };
 

@@ -4,7 +4,7 @@ import { User } from 'database/entities';
 
 @Entity()
 class JWT extends BaseEntity {
-    constructor(token?: string, expires?: Date, user?: User) {
+    constructor(token?: string, expires?: Date, user?: User, id?: number) {
         super();
         if (user) {
             this.user = user;
@@ -14,6 +14,9 @@ class JWT extends BaseEntity {
         }
         if (expires) {
             this.expires = expires;
+        }
+        if (id) {
+            this.id = id;
         }
     }
 
@@ -48,6 +51,10 @@ class JWT extends BaseEntity {
         { nullable: true },
     )
     user: User | null;
+
+    static fromJSON = (json: object): JWT => {
+        return Object.assign(new JWT(), json);
+    };
 
     // decrypt = (): null => {
     //     return null;

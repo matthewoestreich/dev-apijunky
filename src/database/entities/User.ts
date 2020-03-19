@@ -16,13 +16,16 @@ import { JWT } from 'database/entities';
 
 @Entity()
 class User extends BaseEntity {
-    constructor(username?: string, password?: string) {
+    constructor(username?: string, password?: string, id?: number) {
         super();
         if (username) {
             this.username = username;
         }
         if (password) {
             this.password = password;
+        }
+        if (id) {
+            this.id = id;
         }
     }
 
@@ -67,6 +70,16 @@ class User extends BaseEntity {
             updatedAt: this.updatedAt,
         };
     };
+
+    toJSON = (): object => {
+        return { ...this, jwt: { ...this.jwt } };
+    };
+
+    static fromJSON(json: object): User {
+        const o = Object.assign(new User(), json);
+        o.jwt = JWT.fromJSON((json as User).jwt);
+        return o;
+    }
 }
 
 export default User;
