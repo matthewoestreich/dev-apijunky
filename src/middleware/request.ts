@@ -66,14 +66,19 @@ const addUserToRequest: RequestHandler = async (
     const token = getTokenFromRequestHeaders(req.headers);
 
     if (token) {
-        const foundJwt = await JWT.findOne({ where: { token }, relations: ['user'] });
-        foundUser = foundJwt?.user ?? null;
-        if (foundUser) {
-            try {
-                await redis.saveUser(foundUser?.jwt.token, foundUser);
-                appLogger.info('Saved user successfully!');
-            } catch (err) {
-                appLogger.error(`Unable to save user! ${err}`);
+        const userFromCache = await redis.getUser(token);
+        if (userFromCache) {
+            foundUser = User.fromJSON(userFromCache);
+        } else {
+            const foundJwt = await JWT.findOne({ where: { token }, relations: ['user'] });
+            foundUser = foundJwt?.user ?? null;
+            if (foundUser) {
+                try {
+                    await redis.saveUser(foundUser?.jwt.token, foundUser);
+                    appLogger.info('Saved user successfully!');
+                } catch (err) {
+                    appLogger.error(`Unable to save user! ${err}`);
+                }
             }
         }
         req.user = foundUser;
