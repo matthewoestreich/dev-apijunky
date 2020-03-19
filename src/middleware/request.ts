@@ -1,9 +1,7 @@
 import { Application, RequestHandler, Request, Response, NextFunction } from 'express';
 
-import { appLogger } from 'services/logger';
 import { createGuid } from 'utils';
-import * as redis from 'services/redis';
-import { JWT, User } from 'database/entities';
+import { JWT } from 'database/entities';
 import { getTokenFromRequestHeaders } from 'services/authorization';
 
 const addIdToRequest: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
@@ -62,25 +60,10 @@ const addUserToRequest: RequestHandler = async (
     _res: Response,
     next: NextFunction,
 ) => {
-    let foundUser: User | null;
     const token = getTokenFromRequestHeaders(req.headers);
-
     if (token) {
-        const userFromCache = await redis.getUser(token);
-        if (userFromCache) {
-            foundUser = User.fromJSON(userFromCache);
-        } else {
-            const foundJwt = await JWT.findOne({ where: { token }, relations: ['user'] });
-            foundUser = foundJwt?.user ?? null;
-            if (foundUser) {
-                try {
-                    await redis.saveUser(foundUser?.jwt.token, foundUser);
-                    appLogger.info('Saved user successfully!');
-                } catch (err) {
-                    appLogger.error(`Unable to save user! ${err}`);
-                }
-            }
-        }
+        const foundJwt = await JWT.findOne({ where: { token }, relations: ['user'] });
+        const foundUser = foundJwt?.user ?? null;
         req.user = foundUser;
     }
     next();
