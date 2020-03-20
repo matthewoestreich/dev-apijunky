@@ -1,3 +1,3 @@
 import initializeExpress from './app';
 
-initializeExpress();
+initializeExpress(false);

@@ -61,15 +61,13 @@ const initializeExpress = (shouldLog = true): Server => {
         (async (): Promise<void> => {
             try {
                 await createDatabaseConnection();
-                console.log(AppLogger);
                 AppLogger.log.info(
                     green.bold(
                         `\r\n\t\t\t🎉 Successfully connected to database!\t🎉\r\n\t\t\t🎉 Server listening on port '${port}'\t🎉`,
                     ),
                 );
             } catch (err) {
-                console.log('err', err);
-                // AppLogger.log.error(red(err.stack));
+                AppLogger.log.error(red(err.stack));
                 server.close();
             }
         })();
