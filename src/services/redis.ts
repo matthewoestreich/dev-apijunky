@@ -1,17 +1,24 @@
+/*
 import redis from 'redis';
-import { User } from 'database/entities';
 
 const client = redis.createClient();
 
-export const saveUser = (token: string, user: User): Promise<void> => {
-    const finalUser = JSON.stringify(user.toJSON());
+export const saveUser = (token: string, expire?: number): Promise<boolean> => {
     return new Promise((resolve, reject) => {
         try {
-            client.set(token, finalUser, err => {
-                if (err) {
-                    reject(err);
+            client.set(token, 'true', (errorSet, dataSet) => {
+                if (errorSet) {
+                    reject(errorSet);
                 }
-                resolve();
+                if (expire) {
+                    client.expire(token, expire, errorExpire => {
+                        if (errorExpire) {
+                            reject(errorExpire);
+                        }
+                        resolve(true);
+                    });
+                }
+                resolve(dataSet === 'OK');
             });
         } catch (err) {
             reject(err);
@@ -19,17 +26,29 @@ export const saveUser = (token: string, user: User): Promise<void> => {
     });
 };
 
-export const getUser = (token: string): Promise<object> => {
+export const getUser = (token: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         try {
             client.get(token, (err, data) => {
                 if (err) {
                     reject(err);
                 }
-                resolve(JSON.parse(data));
+                resolve(data);
             });
         } catch (error) {
             reject(error);
         }
     });
 };
+
+export const deleteItem = (key: string): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+        client.del(key, (err, data) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(typeof data === 'number');
+        });
+    });
+};
+*/

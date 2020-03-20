@@ -7,6 +7,7 @@ import { asyncCatch, BadRequest } from 'errors';
 import { User, JWT } from 'database/entities';
 import Encryptr from 'classes/Encryptr';
 import { addMillisecondsToDate } from 'utils';
+// import { deleteItem } from 'services/redis';
 
 import Configuration from 'configuration';
 
@@ -61,6 +62,12 @@ export const loginAndGetToken = asyncCatch(async (req: Request, res: Response) =
         const validFor = ms(Configuration.JWT_EXPIRES_IN || '10 minutes');
         const expires = addMillisecondsToDate(new Date(Date.now()), validFor);
 
+        // Remove existing token before updating with new token
+        if (foundUser.jwt) {
+            // deleteItem(foundUser.jwt.token);
+            foundUser.jwt.remove();
+        }
+        // Add new token to User
         foundUser.jwt = new JWT(token, expires, foundUser);
 
         const updatedUser = await foundUser.save();

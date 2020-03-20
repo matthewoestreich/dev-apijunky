@@ -2,7 +2,8 @@ import { Application, RequestHandler, Request, Response, NextFunction } from 'ex
 
 import { createGuid } from 'utils';
 import { JWT } from 'database/entities';
-import { getTokenFromRequestHeaders } from 'services/authorization';
+import { getTokenFromHeaders } from 'services/authorization';
+// import * as redis from 'services/redis';
 
 const addIdToRequest: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
     const dateTime = Date.now();
@@ -31,18 +32,10 @@ const addBodyParametersExistToRequest: RequestHandler = (
 ) => {
     req.bodyParametersExist = (expectedParams: string[]): boolean => {
         const bodyKeys = Object.keys(req.body);
-        if (expectedParams.length !== bodyKeys.length) {
-            return false;
-        }
-
-        let result = true;
-        expectedParams.forEach(p => {
-            if (!bodyKeys.includes(p)) {
-                result = false;
-            }
-        });
-
-        return result;
+        return (
+            expectedParams.length === bodyKeys.length &&
+            bodyKeys.every(item => expectedParams.includes(item))
+        );
     };
     next();
 };
@@ -60,29 +53,33 @@ const addUserToRequest: RequestHandler = async (
     _res: Response,
     next: NextFunction,
 ) => {
-    const token = getTokenFromRequestHeaders(req.headers);
+    const token = getTokenFromHeaders(req.headers);
     if (token) {
-        const foundJwt = await JWT.findOne({ where: { token }, relations: ['user'] });
-        const foundUser = foundJwt?.user ?? null;
-        req.user = foundUser;
+        const existingJwt = await JWT.findOne({ where: { token }, relations: ['user'] });
+        req.jwt = existingJwt?.user?.jwt.token ?? null;
     }
     next();
-};
+    /*
+    const token = getTokenFromHeaders(req.headers);
+    let foundToken = null;
 
-/**
- * This method tries to find the JWT from a request, if one is found then it
- * is used on the request object as req.jwt.
- *
- * @param req {express.Request}
- * @param _res {express.Response}
- * @param next {express.NextFunction}
- */
-// const addJwtToRequest: RequestHandler = (req: Request, _res: Response, next: NextFunction) => {
-//     const header = req.get('Authorization') || '';
-//     const [bearer, token] = header.split(' ');
-//     req.rawJwt = bearer === 'Bearer' && token ? token : null;
-//     next();
-// };
+    if (token) {
+        const cachedToken = await redis.getUser(token);
+        if (cachedToken) {
+            console.log('cachedToken', cachedToken);
+            foundToken = token;
+        } else {
+            const result = await redis.saveUser(token);
+            console.log('result', result);
+            const existingJwt = await JWT.findOne({ where: { token }, relations: ['user'] });
+            foundToken = existingJwt?.user?.jwt.token ?? null;
+        }
+    }
+
+    req.jwt = foundToken;
+    next();
+    */
+};
 
 export const attachRequestExtensionProps = (app: Application): void => {
     app.use(addIdToRequest);

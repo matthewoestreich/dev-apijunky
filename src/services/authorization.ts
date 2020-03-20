@@ -5,71 +5,43 @@ import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import Encryptr from 'classes/Encryptr';
 
 import { asyncCatch, InvalidTokenError, ExpiredTokenError } from 'errors';
-import { User, JWT } from 'database/entities';
 
 import Configuration from 'configuration';
 
-const validateToken = async (token: string): Promise<string | void> => {
+/**
+ * This method returns the decrypted JWT (as a JSON object)
+ * ex: { id: 1, iat: 1584632449, exp: 1584637849 }
+ *
+ * @param token {String} Token to decrypt
+ */
+const decryptTokenAndVerify = (token: string): string => {
     try {
-        const foundJwt = await JWT.findOneOrFail({ where: { token } });
-        const encryptionKey = Configuration.JWT_ENCRYPTION_KEY;
-        const jwtSigningKey = Configuration.JWT_SIGNING_KEY;
-
-        try {
-            const decryptedToken = Encryptr.decrypt(foundJwt.token, encryptionKey);
-            const rawToken = jwt.verify(decryptedToken, jwtSigningKey) as string;
-
-            if (rawToken) {
-                return rawToken;
-            }
-
-            throw new Error(rawToken);
-        } catch (error) {
-            if (error instanceof TokenExpiredError) {
-                await JWT.delete(foundJwt.id);
-                throw new ExpiredTokenError();
-            }
-            throw new InvalidTokenError();
+        const decryptedToken = Encryptr.decrypt(token, Configuration.JWT_ENCRYPTION_KEY);
+        return jwt.verify(decryptedToken, Configuration.JWT_SIGNING_KEY) as string;
+    } catch (err) {
+        if (err instanceof TokenExpiredError) {
+            throw new ExpiredTokenError();
         }
-    } catch (error) {
         throw new InvalidTokenError();
     }
 };
 
-export const authorizeUser = asyncCatch(
-    async (req: Request, _res: Response, next: NextFunction) => {
-        /**
-         * TODO: Clean this up
-         *
-         * By this point the request object should have the user (as req.user) as well
-         * as the sent JWT Bearer token (as req.rawJwt).  This means we should be able
-         * to just see if `req.user.token.token` exists
-         */
-        console.log('[middleware/authorize.ts][req.user]:', req.user);
-        const token = req.rawJwt;
-        if (!token) {
-            throw new InvalidTokenError('Authentication token not found.');
-        }
+export const authorize = asyncCatch((req: Request, _res: Response, next: NextFunction) => {
+    const token = req.jwt;
+    if (!token) {
+        throw new InvalidTokenError('Authentication token not found.');
+    }
 
-        const userId = await validateToken(token);
-        if (!userId) {
-            throw new InvalidTokenError('Authentication token is invalid.');
-        }
+    const userId = decryptTokenAndVerify(token);
+    if (!userId) {
+        throw new InvalidTokenError('Authentication token is invalid.');
+    }
 
-        const user = await User.findOne(userId);
-        if (!user) {
-            throw new InvalidTokenError('Authentication token is invalid: User not found.');
-        }
+    next();
+});
 
-        next();
-    },
-);
-
-export const getTokenFromRequestHeaders = (headers: IncomingHttpHeaders): string | null => {
+export const getTokenFromHeaders = (headers: IncomingHttpHeaders): string | null => {
     const authHeader = headers.authorization || '';
     const [bearer, token] = authHeader.split(' ');
     return bearer === 'Bearer' && token ? token : null;
-    // const header = req.get('Authorization') || '';
-    // const [bearer, token] = header.split(' ');
-    // req.rawJwt = bearer === 'Bearer' && token ? token : null;
 };

@@ -66,21 +66,6 @@
  */
 
 /**
- * @api {post} /api/v1/user/createtestuser Create Test User
- * @apiVersion 0.0.1
- * @apiName ApiV1CreateTestUser
- * @apiGroup User
- *
- * @apiHeader {String} Authorization JWT token. Must be in `Bearer token-goes-here` format
- * @apiUse authHeaderExample
- *
- * @apiUse userSuccess
- * @apiUse userSuccessResponseExample
- *
- * @apiError (401) 401 Returns 401 status on bad authentication request.
- */
-
-/**
  * @api {post} /api/v1/user/create Create User
  * @apiVersion 0.0.1
  * @apiName ApiV1CreateUser

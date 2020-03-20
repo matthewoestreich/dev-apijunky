@@ -8,7 +8,10 @@ import { ExpectStatus } from './helpers';
 
 const server = initializeExpress();
 
-after(done => server.close(done));
+after(done => {
+    
+    server.close(done);
+});
 
 describe('Volkswagen Test', () => {
     it('should always pass', () => {

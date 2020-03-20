@@ -9,6 +9,6 @@ declare namespace Express {
 
         __reqId: string;
 
-        rawJwt: string | null;
+        jwt: string | null;
     }
 }

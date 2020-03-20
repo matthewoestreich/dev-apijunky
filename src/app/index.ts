@@ -10,7 +10,8 @@ import compression from 'compression';
 import { green, red } from 'chalk';
 
 import { autoRemoveExpiredTokensEvery } from 'services/jwt';
-import makeRequestLogger, { makeAppLogger, appLogger } from 'services/logger';
+// import makeRequestLogger, { makeAppLogger, appLogger } from 'services/logger';
+import { RequestLogger, AppLogger } from 'services/logger';
 import createDatabaseConnection from 'database/createConnection';
 import { attachPublicRoutes, attachApiRoutes } from 'routes';
 import Configuration from 'configuration';
@@ -28,7 +29,7 @@ const initializeExpress = (): Server => {
     Configuration.init();
 
     // In ms.js format
-    autoRemoveExpiredTokensEvery('10 minutes');
+    autoRemoveExpiredTokensEvery('24 hours');
 
     const app = express();
 
@@ -38,11 +39,8 @@ const initializeExpress = (): Server => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
-    // In order to use appLogger, import it from 'services/logger';
-    // This method creates a logger that is tied to `appLogger` within
-    // the logger service.
-    makeAppLogger('../../_logs/app.log');
-    app.use(makeRequestLogger('../../_logs/requests.log'));
+    AppLogger.setLogFile('../../_logs/app.log');
+    app.use(RequestLogger.new('../../_logs/requests.log'));
 
     app.use(cors());
     app.use(helmet());
@@ -62,13 +60,13 @@ const initializeExpress = (): Server => {
         (async (): Promise<void> => {
             try {
                 await createDatabaseConnection();
-                appLogger.info(
+                AppLogger.log.info(
                     green.bold(
                         `\r\n\t\t\t🎉 Successfully connected to database!\t🎉\r\n\t\t\t🎉 Server listening on port '${port}'\t🎉`,
                     ),
                 );
             } catch (err) {
-                appLogger.error(red(err.stack));
+                AppLogger.log.error(red(err.stack));
                 server.close();
             }
         })();

@@ -1,25 +1,10 @@
 import { Request, Response } from 'express';
-import { asyncCatch, CustomError, EntityNotFoundError } from 'errors';
+import { asyncCatch, EntityNotFoundError } from 'errors';
 import { User } from 'database/entities';
 
-export const createTestUser = asyncCatch(async (_req: Request, res: Response) => {
-    try {
-        const newUser = new User();
-        newUser.username = 'Test One';
-        newUser.password = 'abc123';
-        await newUser.save();
-        res.respond(200, { status: 'ok' });
-    } catch (error) {
-        CustomError.toss('Unable to create test user!', {
-            debug: error.message,
-            id: error.code,
-        });
-    }
-});
-
 export const createNewUser = asyncCatch(async (req: Request, res: Response) => {
-    const nu = await new User(req.query.un, req.query.pw).save();
-    // const nu = await u.save();
+    req.bodyParametersExist(['un', 'pw']);
+    const nu = await new User(req.body.un, req.body.pw).save();
     res.respond(200, nu.toResponseObject());
 });
 

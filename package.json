@@ -12,6 +12,7 @@
         "clean:build": "npm run clean && npm run build",
         "tsc:init": "npm run build -- --init",
         "test": "nyc mocha",
+        "nyc": "nyc",
         "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
         "apidoc": "apidoc --config ./docs/apidoc --input docs/apidoc/ --output dist/public/docs"
     },
