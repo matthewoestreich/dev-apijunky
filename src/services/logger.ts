@@ -131,7 +131,11 @@ class RequestLogger {
  * and nothing is logged to file.
  */
 class ApplicationLogger {
-    public log: Logger;
+    public log: Logger = createLogger();
+
+    constructor(log: Logger) {
+        this.log = log;
+    }
 
     setLogFile = (logFilePath: string): void => {
         createDirectoryInFilePathIfNotExist(logFilePath);
@@ -161,6 +165,10 @@ class ApplicationLogger {
 // We create an instance of ApplicationLogger so that we can use it
 // accross our app.
 // We set the log file path using `.setLogFile(...)` in 'src/app.ts'.
-const AppLogger = new ApplicationLogger();
+const AppLogger = new ApplicationLogger(
+    createLogger({
+        transports: [new transports.Console()],
+    }),
+);
 
 export { RequestLogger, AppLogger };

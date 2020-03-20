@@ -9,7 +9,7 @@ import { ExpectStatus } from './helpers';
 const server = initializeExpress();
 
 after(done => {
-    
+
     server.close(done);
 });
 

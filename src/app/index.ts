@@ -10,7 +10,6 @@ import compression from 'compression';
 import { green, red } from 'chalk';
 
 import { autoRemoveExpiredTokensEvery } from 'services/jwt';
-// import makeRequestLogger, { makeAppLogger, appLogger } from 'services/logger';
 import { RequestLogger, AppLogger } from 'services/logger';
 import createDatabaseConnection from 'database/createConnection';
 import { attachPublicRoutes, attachApiRoutes } from 'routes';
@@ -23,7 +22,7 @@ import {
     attachRequestExtensionProps,
 } from 'middleware';
 
-const initializeExpress = (): Server => {
+const initializeExpress = (shouldLog = true): Server => {
     // Initialize our configuration
     // This checks for empty env variables
     Configuration.init();
@@ -39,8 +38,10 @@ const initializeExpress = (): Server => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
-    AppLogger.setLogFile('../../_logs/app.log');
-    app.use(RequestLogger.new('../../_logs/requests.log'));
+    if (shouldLog) {
+        AppLogger.setLogFile('../../_logs/app.log');
+        app.use(RequestLogger.new('../../_logs/requests.log'));
+    }
 
     app.use(cors());
     app.use(helmet());
@@ -60,13 +61,15 @@ const initializeExpress = (): Server => {
         (async (): Promise<void> => {
             try {
                 await createDatabaseConnection();
+                console.log(AppLogger);
                 AppLogger.log.info(
                     green.bold(
                         `\r\n\t\t\t🎉 Successfully connected to database!\t🎉\r\n\t\t\t🎉 Server listening on port '${port}'\t🎉`,
                     ),
                 );
             } catch (err) {
-                AppLogger.log.error(red(err.stack));
+                console.log('err', err);
+                // AppLogger.log.error(red(err.stack));
                 server.close();
             }
         })();
