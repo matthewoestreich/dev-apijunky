@@ -36,7 +36,7 @@
         "@types/morgan": "^1.9.0",
         "@types/ms": "^0.7.31",
         "@types/redis": "^2.8.16",
-        "bcrypt": "^3.0.8",
+        "bcrypt": "^5.0.0",
         "chalk": "^3.0.0",
         "compression": "^1.7.4",
         "cors": "^2.8.5",
