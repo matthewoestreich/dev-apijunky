@@ -55,7 +55,7 @@
         "typeorm": "^0.2.22",
         "typescript": "^3.8.2",
         "winston": "^3.2.1",
-        "snyk": "^1.316.1"
+        "snyk": "^1.398.0"
     },
     "devDependencies": {
         "@types/chai": "^4.2.8",
